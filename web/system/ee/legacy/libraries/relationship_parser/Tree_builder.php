@@ -251,7 +251,7 @@ class EE_relationship_tree_builder {
 			$regex = '\/?((?:'.$force_parent.')(?:[:](?:(?:'.$all_fields.'):?)+)?)\b([^}{]*)?';
 		}
 
-		require_once __DIR__.'/VariableFinder.php';
+		require_once __DIR__ . '/VariableFinder.php';
 
 		$finder = new VariableFinder($regex);
 		$found = $finder->find($str);

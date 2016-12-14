@@ -54,7 +54,7 @@
  *  Load the global functions
  * ------------------------------------------------------
  */
-	require __DIR__.'/boot.common.php';
+	require __DIR__ . '/boot.common.php';
 
 /*
  * ------------------------------------------------------

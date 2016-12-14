@@ -101,7 +101,7 @@
 	define('SELF', basename(__FILE__));
 
 	// Path to this file
-	define('FCPATH', __DIR__.'/');
+	define('FCPATH', __DIR__ . 'index.php/');
 
 	// Path to the "system" folder
 	define('SYSPATH', $system_path);
@@ -145,6 +145,6 @@
 		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
 	}
 
-	require_once SYSPATH.'ee/EllisLab/ExpressionEngine/Boot/boot.php';
+	require_once SYSPATH . 'ee/EllisLab/ExpressionEngine/Boot/boot.php';
 
 // EOF
