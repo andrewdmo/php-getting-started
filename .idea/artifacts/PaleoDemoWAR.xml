@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="PaleoDemoWAR">
+    <output-path>$PROJECT_DIR$/out/artifacts/PaleoDemoWAR</output-path>
+    <root id="archive" name="PaleoDemoWAR.war">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="PaleoDemo" />
+          <element id="library" level="module" name="PHP" module-name="PaleoDemo" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="module" name="PHP Runtime" module-name="PaleoDemo" />
+        </element>
+      </element>
+      <element id="library" level="module" name="PHP" module-name="PaleoDemo" />
+      <element id="library" level="module" name="PHP Runtime" module-name="PaleoDemo" />
+    </root>
+  </artifact>
+</component>
