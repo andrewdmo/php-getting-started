@@ -1,9 +1,9 @@
-$(function(){
+$(function () {
 
-	// ===============
-	// cycle
-	// ===============
+    // ===============
+    // cycle
+    // ===============
 
-		$('.cycle-slideshow').cycle();
+    $('.cycle-slideshow').cycle();
 
 }); // close (document).ready

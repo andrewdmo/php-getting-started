@@ -2,7 +2,8 @@
 
 namespace EllisLab\ExpressionEngine\Service\ChannelSet;
 
-class ImportResult {
+class ImportResult
+{
 
     /**
      * @var Bool Is valid import?
@@ -12,17 +13,17 @@ class ImportResult {
     /**
      * @var Array of fatal errors
      */
-	private $errors = array();
+    private $errors = array();
 
     /**
      * @var Array of fatal model errors
      */
-	private $model_errors = array();
+    private $model_errors = array();
 
     /**
      * @var Array of errors we can recover from with user input
      */
-	private $fixable_errors = array();
+    private $fixable_errors = array();
 
     /**
      * Add a fatal error.
@@ -30,13 +31,13 @@ class ImportResult {
      * @param String $error Fatal error description
      * @return $this
      */
-	public function addError($error)
-	{
-		$this->valid = FALSE;
-		$this->errors[] = $error;
+    public function addError($error)
+    {
+        $this->valid = FALSE;
+        $this->errors[] = $error;
 
-		return $this;
-	}
+        return $this;
+    }
 
     /**
      * Add a failed model. We'll check if it's recoverable by user input and
@@ -52,15 +53,12 @@ class ImportResult {
     {
         $this->valid = FALSE;
 
-        if ($this->errorIsRecoverable($model, $field, $rules))
-        {
+        if ($this->errorIsRecoverable($model, $field, $rules)) {
             $ident_field = Structure::getIdentityFieldFor($model);
             $identity = $model->$ident_field;
 
             $this->fixable_errors[$heading][] = array($model, $field, $identity, $rules);
-        }
-        else
-        {
+        } else {
             $this->model_errors[$heading][] = array($model, $field, $rules);
         }
     }
@@ -70,10 +68,10 @@ class ImportResult {
      *
      * @return Array Fatal errors
      */
-	public function getErrors()
-	{
-		return $this->errors;
-	}
+    public function getErrors()
+    {
+        return $this->errors;
+    }
 
     /**
      * Get model errors that were not recoverable
@@ -154,10 +152,8 @@ class ImportResult {
             'ee:UploadDestination' => array('name', 'server_path', 'url')
         );
 
-        if (isset($recoverable[$model->getName()]))
-        {
-            if (in_array($field, $recoverable[$model->getName()]))
-            {
+        if (isset($recoverable[$model->getName()])) {
+            if (in_array($field, $recoverable[$model->getName()])) {
                 return TRUE;
             }
         }

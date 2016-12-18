@@ -1,4 +1,6 @@
-Thank you for choosing ExpressionEngine! This entry contains helpful resources to help you <a href="https://ellislab.com/expressionengine/user-guide/intro/getting_the_most.html">get the most from ExpressionEngine</a> and the EllisLab Community.
+Thank you for choosing ExpressionEngine! This entry contains helpful resources to help you <a
+        href="https://ellislab.com/expressionengine/user-guide/intro/getting_the_most.html">get the most from
+    ExpressionEngine</a> and the EllisLab Community.
 
 <strong>Learning resources:</strong>
 

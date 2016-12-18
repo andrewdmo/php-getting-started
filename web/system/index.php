@@ -2,12 +2,12 @@
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.0
+ * @package        ExpressionEngine
+ * @author        EllisLab Dev Team
+ * @copyright    Copyright (c) 2003 - 2016, EllisLab, Inc.
+ * @license        https://expressionengine.com/license
+ * @link        https://ellislab.com
+ * @since        Version 2.0
  */
 
 /*
@@ -22,7 +22,7 @@
  * https://ellislab.com/expressionengine/user-guide/installation/best_practices.html
  *
  */
-	$system_path = "";
+$system_path = "";
 
 /*
  * --------------------------------------------------------------------
@@ -44,7 +44,7 @@
  * Enable it only if you have a good reason to.
  *
  */
-	$debug = 0;
+$debug = 0;
 
 
 /*
@@ -82,14 +82,13 @@
  * --------------------------------------------------------------------
  */
 
-	$system_path = $system_path ?: __DIR__;
+$system_path = $system_path ?: __DIR__;
 
-	if (realpath($system_path) !== FALSE)
-	{
-		$system_path = realpath($system_path);
-	}
+if (realpath($system_path) !== FALSE) {
+    $system_path = realpath($system_path);
+}
 
-	$system_path = rtrim($system_path, '/').'/';
+$system_path = rtrim($system_path, '/') . '/';
 
 /*
  * --------------------------------------------------------------------
@@ -97,38 +96,36 @@
  * --------------------------------------------------------------------
  */
 
-	// The name of this file
-	define('SELF', basename(__FILE__));
+// The name of this file
+define('SELF', basename(__FILE__));
 
-	// Path to this file
-	define('FCPATH', __DIR__ . 'index.php/');
+// Path to this file
+define('FCPATH', __DIR__ . 'index.php/');
 
-	// Path to the "system" folder
-	define('SYSPATH', $system_path);
+// Path to the "system" folder
+define('SYSPATH', $system_path);
 
-	// Name of the "system folder"
-	define('SYSDIR', basename($system_path));
+// Name of the "system folder"
+define('SYSDIR', basename($system_path));
 
-	// The $debug value as a constant for global access
-	define('DEBUG', $debug);  unset($debug);
+// The $debug value as a constant for global access
+define('DEBUG', $debug);
+unset($debug);
 
- 	// The control panel access constant ensures the CP will be invoked.
-	define('REQ', 'CP');
+// The control panel access constant ensures the CP will be invoked.
+define('REQ', 'CP');
 
 /*
  * --------------------------------------------------------------------
  *  Set the error reporting level
  * --------------------------------------------------------------------
  */
-	if (DEBUG == 1)
-	{
-		error_reporting(E_ALL);
-		@ini_set('display_errors', 1);
-	}
-	else
-	{
-		error_reporting(0);
-	}
+if (DEBUG == 1) {
+    error_reporting(E_ALL);
+    @ini_set('display_errors', 1);
+} else {
+    error_reporting(0);
+}
 
 /*
  *---------------------------------------------------------------
@@ -138,13 +135,12 @@
  * And away we go...
  *
  */
-	// Is the system path correct?
-	if ( ! file_exists(SYSPATH.'ee/EllisLab/ExpressionEngine/Boot/boot.php'))
-	{
-		header('HTTP/1.1 503 Service Unavailable.', TRUE, '503');
-		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
-	}
+// Is the system path correct?
+if (!file_exists(SYSPATH . 'ee/EllisLab/ExpressionEngine/Boot/boot.php')) {
+    header('HTTP/1.1 503 Service Unavailable.', TRUE, '503');
+    exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: " . pathinfo(__FILE__, PATHINFO_BASENAME));
+}
 
-	require_once SYSPATH . 'ee/EllisLab/ExpressionEngine/Boot/boot.php';
+require_once SYSPATH . 'ee/EllisLab/ExpressionEngine/Boot/boot.php';
 
 // EOF

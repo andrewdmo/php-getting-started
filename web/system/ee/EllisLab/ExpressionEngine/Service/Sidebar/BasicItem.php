@@ -6,12 +6,12 @@ use EllisLab\ExpressionEngine\Service\View\ViewFactory;
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0
+ * @package        ExpressionEngine
+ * @author        EllisLab Dev Team
+ * @copyright    Copyright (c) 2003 - 2016, EllisLab, Inc.
+ * @license        https://expressionengine.com/license
+ * @link        https://ellislab.com
+ * @since        Version 3.0
  * @filesource
  */
 
@@ -20,70 +20,68 @@ use EllisLab\ExpressionEngine\Service\View\ViewFactory;
 /**
  * ExpressionEngine BasicItem Class
  *
- * @package		ExpressionEngine
- * @category	Service
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * @package        ExpressionEngine
+ * @category    Service
+ * @author        EllisLab Dev Team
+ * @link        https://ellislab.com
  */
-class BasicItem extends ListItem {
+class BasicItem extends ListItem
+{
 
-	/**
-	 * @var string $rel An <a> tag's rel attribute
-	 */
-	protected $rel;
+    /**
+     * @var string $rel An <a> tag's rel attribute
+     */
+    protected $rel;
 
-	/**
-	 * Marks the item as a delete action
-	 *
-	 * @param string $modal_name The name of the modal this delete action will trigger
-	 * @return self This returns a reference to itself
-	 */
-	public function asDeleteAction($modal_name = '')
-	{
-		$this->addClass('remove ');
-		$this->rel = $modal_name;
+    /**
+     * Marks the item as a delete action
+     *
+     * @param string $modal_name The name of the modal this delete action will trigger
+     * @return self This returns a reference to itself
+     */
+    public function asDeleteAction($modal_name = '')
+    {
+        $this->addClass('remove ');
+        $this->rel = $modal_name;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
-	 * Renders this item. This should not be called directly. Instead use
-	 * the Sidebar's render method.
-	 *
-	 * @see Sidebar::render
-	 * @param ViewFactory $view A ViewFactory object to use with rendering
-	 * @return string The rendered HTML of the item
-	 */
-	public function render(ViewFactory $view)
-	{
-		$class = $this->getClass();
+    /**
+     * Renders this item. This should not be called directly. Instead use
+     * the Sidebar's render method.
+     *
+     * @see Sidebar::render
+     * @param ViewFactory $view A ViewFactory object to use with rendering
+     * @return string The rendered HTML of the item
+     */
+    public function render(ViewFactory $view)
+    {
+        $class = $this->getClass();
 
-		if ($class)
-		{
-			$class = ' class="' . $class . '"';
-		}
+        if ($class) {
+            $class = ' class="' . $class . '"';
+        }
 
-		$attrs = '';
+        $attrs = '';
 
-		if ($this->url_is_external)
-		{
-			$attrs .= ' rel="external"';
-		}
+        if ($this->url_is_external) {
+            $attrs .= ' rel="external"';
+        }
 
-		if ($this->rel)
-		{
-			$attrs .= ' class="m-link" rel="' . $this->rel . '"';
-		}
+        if ($this->rel) {
+            $attrs .= ' class="m-link" rel="' . $this->rel . '"';
+        }
 
-		$vars = array(
-			'text' => $this->text,
-			'url' => $this->url,
-			'attrs' => $attrs,
-			'class' => $class
-		);
+        $vars = array(
+            'text' => $this->text,
+            'url' => $this->url,
+            'attrs' => $attrs,
+            'class' => $class
+        );
 
-		return $view->make('_shared/sidebar/basic_item')->render($vars);
-	}
+        return $view->make('_shared/sidebar/basic_item')->render($vars);
+    }
 
 }
 

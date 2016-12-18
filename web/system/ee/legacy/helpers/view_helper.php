@@ -1,13 +1,13 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.6
+ * @package        ExpressionEngine
+ * @author        EllisLab Dev Team
+ * @copyright    Copyright (c) 2003 - 2016, EllisLab, Inc.
+ * @license        https://expressionengine.com/license
+ * @link        https://ellislab.com
+ * @since        Version 2.6
  * @filesource
  */
 
@@ -16,11 +16,11 @@
 /**
  * ExpressionEngine View Helper
  *
- * @package		ExpressionEngine
- * @subpackage	Helpers
- * @category	Helpers
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * @package        ExpressionEngine
+ * @subpackage    Helpers
+ * @category    Helpers
+ * @author        EllisLab Dev Team
+ * @link        https://ellislab.com
  */
 
 // ------------------------------------------------------------------------
@@ -30,7 +30,7 @@
  */
 function extend_template($which, $disable = array())
 {
-	ee()->view->extend('_templates/'.$which, $disable);
+    ee()->view->extend('_templates/' . $which, $disable);
 }
 
 // ------------------------------------------------------------------------
@@ -41,7 +41,7 @@ function extend_template($which, $disable = array())
  */
 function extend_view($which, $disable = array())
 {
-	ee()->view->extend($which, $disable);
+    ee()->view->extend($which, $disable);
 }
 
 // ------------------------------------------------------------------------
@@ -51,7 +51,7 @@ function extend_view($which, $disable = array())
  */
 function disabled($which)
 {
-	return ee()->view->disabled($which);
+    return ee()->view->disabled($which);
 }
 
 // ------------------------------------------------------------------------
@@ -61,6 +61,6 @@ function disabled($which)
  */
 function enabled($which)
 {
-	return ! ee()->view->disabled($which);
+    return !ee()->view->disabled($which);
 }
 

@@ -1,3 +1,3 @@
 <ul>
-	<?=$items?>
+    <?= $items ?>
 </ul>

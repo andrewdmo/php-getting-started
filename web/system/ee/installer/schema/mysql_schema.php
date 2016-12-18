@@ -1,42 +1,43 @@
 <?php
 
 
-class EE_Schema {
+class EE_Schema
+{
 
-	// All of these variables are set dyncamically
-	var $now;
-	var $year;
-	var $month;
-	var $day;
-	var $default_entry	= '';
-	var $theme_path		= '';
+    // All of these variables are set dyncamically
+    var $now;
+    var $year;
+    var $month;
+    var $day;
+    var $default_entry = '';
+    var $theme_path = '';
 
-	private $default_engine = 'InnoDB';
+    private $default_engine = 'InnoDB';
 
-	/**
-	 * Returns a platform-specific query that looks for EE tables
-	 *
-	 * @access	public
-	 * @return	string
-	 */
-	function sql_find_like()
-	{
-		return "SHOW tables LIKE '".ee()->db->escape_like_str($this->userdata['db_prefix'])."%'";
-	}
+    /**
+     * Returns a platform-specific query that looks for EE tables
+     *
+     * @access    public
+     * @return    string
+     */
+    function sql_find_like()
+    {
+        return "SHOW tables LIKE '" . ee()->db->escape_like_str($this->userdata['db_prefix']) . "%'";
+    }
 
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
-	/**
-	 * Installs the DB tables and data
-	 *
-	 * @access	public
-	 * @return	bool
-	 */
-	function install_tables_and_data()
-	{
-		// Sites
+    /**
+     * Installs the DB tables and data
+     *
+     * @access    public
+     * @return    bool
+     */
+    function install_tables_and_data()
+    {
+        // Sites
 
-		$Q[] = "CREATE TABLE `exp_sites` (
+        $Q[] = "CREATE TABLE `exp_sites` (
 			`site_id` int(5) unsigned NOT NULL auto_increment,
 			`site_label` varchar(100) NOT NULL default '',
 			`site_name` varchar(50) NOT NULL default '',
@@ -51,9 +52,9 @@ class EE_Schema {
 			KEY `site_name` (`site_name`)
 		)";
 
-		// Session data
+        // Session data
 
-		$Q[] = "CREATE TABLE exp_sessions (
+        $Q[] = "CREATE TABLE exp_sessions (
 			session_id varchar(40) default '0' NOT NULL,
 			member_id int(10) default '0' NOT NULL,
 			admin_sess tinyint(1) default '0' NOT NULL,
@@ -69,9 +70,9 @@ class EE_Schema {
 			KEY `last_activity_idx` (`last_activity`)
 		)";
 
-		// Throttle
+        // Throttle
 
-		$Q[] = "CREATE TABLE exp_throttle (
+        $Q[] = "CREATE TABLE exp_throttle (
 			throttle_id int(10) unsigned NOT NULL auto_increment,
 			ip_address varchar(45) default '0' NOT NULL,
 			last_activity int(10) unsigned DEFAULT '0' NOT NULL,
@@ -83,9 +84,9 @@ class EE_Schema {
 		)";
 
 
-		// System stats
+        // System stats
 
-		$Q[] = "CREATE TABLE exp_stats (
+        $Q[] = "CREATE TABLE exp_stats (
 			stat_id int(10) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			total_members mediumint(7) NOT NULL default '0',
@@ -107,9 +108,9 @@ class EE_Schema {
 		)";
 
 
-		// Online users
+        // Online users
 
-		$Q[] = "CREATE TABLE exp_online_users (
+        $Q[] = "CREATE TABLE exp_online_users (
 			online_id int(10) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			member_id int(10) default '0' NOT NULL,
@@ -124,10 +125,10 @@ class EE_Schema {
 		)";
 
 
-		// Actions table
-		// Actions are events that require processing. Used by modules class.
+        // Actions table
+        // Actions are events that require processing. Used by modules class.
 
-		$Q[] = "CREATE TABLE exp_actions (
+        $Q[] = "CREATE TABLE exp_actions (
 			action_id int(4) unsigned NOT NULL auto_increment,
 			class varchar(50) NOT NULL,
 			method varchar(50) NOT NULL,
@@ -135,10 +136,10 @@ class EE_Schema {
 			PRIMARY KEY `action_id` (`action_id`)
 		)";
 
-		// Modules table
-		// Contains a list of all installed modules
+        // Modules table
+        // Contains a list of all installed modules
 
-		$Q[] = "CREATE TABLE exp_modules (
+        $Q[] = "CREATE TABLE exp_modules (
 			module_id int(4) unsigned NOT NULL auto_increment,
 			module_name varchar(50) NOT NULL,
 			module_version varchar(12) NOT NULL,
@@ -147,10 +148,10 @@ class EE_Schema {
 			PRIMARY KEY `module_id` (`module_id`)
 		)";
 
-		// Plugins table
-		// Contains a list of all installed plugins
+        // Plugins table
+        // Contains a list of all installed plugins
 
-		$Q[] = "CREATE TABLE exp_plugins (
+        $Q[] = "CREATE TABLE exp_plugins (
 			plugin_id int(10) unsigned NOT NULL auto_increment,
 			plugin_name varchar(50) NOT NULL,
 			plugin_package varchar(50) NOT NULL,
@@ -159,10 +160,10 @@ class EE_Schema {
 			PRIMARY KEY `plugin_id` (`plugin_id`)
 		)";
 
-		// Security Hashes
-		// Used to store hashes needed to process forms in 'secure mode'
+        // Security Hashes
+        // Used to store hashes needed to process forms in 'secure mode'
 
-		$Q[] = "CREATE TABLE exp_security_hashes (
+        $Q[] = "CREATE TABLE exp_security_hashes (
 			hash_id int(10) unsigned NOT NULL auto_increment,
 			date int(10) unsigned NOT NULL,
 			session_id varchar(40) default '0' NOT NULL,
@@ -171,9 +172,9 @@ class EE_Schema {
 			KEY `session_id` (`session_id`)
 		)";
 
-		// CAPTCHA data
+        // CAPTCHA data
 
-		$Q[] = "CREATE TABLE exp_captcha (
+        $Q[] = "CREATE TABLE exp_captcha (
 			captcha_id bigint(13) unsigned NOT NULL auto_increment,
 			date int(10) unsigned NOT NULL,
 			ip_address varchar(45) default '0' NOT NULL,
@@ -182,12 +183,12 @@ class EE_Schema {
 			KEY `word` (`word`)
 		)";
 
-		// Password Lockout
-		// If password lockout is enabled, a user only gets
-		// four attempts to log-in within a specified period.
-		// This table holds the a list of locked out users
+        // Password Lockout
+        // If password lockout is enabled, a user only gets
+        // four attempts to log-in within a specified period.
+        // This table holds the a list of locked out users
 
-		$Q[] = "CREATE TABLE exp_password_lockout (
+        $Q[] = "CREATE TABLE exp_password_lockout (
 			lockout_id int(10) unsigned NOT NULL auto_increment,
 			login_date int(10) unsigned NOT NULL,
 			ip_address varchar(45) default '0' NOT NULL,
@@ -199,11 +200,11 @@ class EE_Schema {
 			KEY `user_agent` (`user_agent`)
 		)";
 
-		// Reset password
-		// If a user looses their password, this table
-		// holds the reset code.
+        // Reset password
+        // If a user looses their password, this table
+        // holds the reset code.
 
-		$Q[] = "CREATE TABLE exp_reset_password (
+        $Q[] = "CREATE TABLE exp_reset_password (
 			reset_id int(10) unsigned NOT NULL auto_increment,
 			member_id int(10) unsigned NOT NULL,
 			resetcode varchar(12) NOT NULL,
@@ -211,10 +212,10 @@ class EE_Schema {
 			PRIMARY KEY `reset_id` (`reset_id`)
 		)";
 
-		// Email Cache
-		// We store all email messages that are sent from the CP
+        // Email Cache
+        // We store all email messages that are sent from the CP
 
-		$Q[] = "CREATE TABLE exp_email_cache (
+        $Q[] = "CREATE TABLE exp_email_cache (
 			cache_id int(6) unsigned NOT NULL auto_increment,
 			cache_date int(10) unsigned default '0' NOT NULL,
 			total_sent int(6) unsigned NOT NULL,
@@ -234,31 +235,31 @@ class EE_Schema {
 			PRIMARY KEY `cache_id` (`cache_id`)
 		)";
 
-		// Cached Member Groups
-		// We use this table to store the member group assignments
-		// for each email that is sent.  Since you can send email
-		// to various combinations of members, we store the member
-		// group numbers in this table, which is joined to the
-		// table above when we need to re-send an email from cache.
+        // Cached Member Groups
+        // We use this table to store the member group assignments
+        // for each email that is sent.  Since you can send email
+        // to various combinations of members, we store the member
+        // group numbers in this table, which is joined to the
+        // table above when we need to re-send an email from cache.
 
-		$Q[] = "CREATE TABLE exp_email_cache_mg (
+        $Q[] = "CREATE TABLE exp_email_cache_mg (
 			cache_id int(6) unsigned NOT NULL,
 			group_id smallint(4) NOT NULL,
 			PRIMARY KEY `cache_id_group_id` (`cache_id`, `group_id`)
 		)";
 
-		// We do the same with mailing lists
+        // We do the same with mailing lists
 
-		$Q[] = "CREATE TABLE exp_email_cache_ml (
+        $Q[] = "CREATE TABLE exp_email_cache_ml (
 			cache_id int(6) unsigned NOT NULL,
 			list_id smallint(4) NOT NULL,
 			PRIMARY KEY `cache_id_list_id` (`cache_id`, `list_id`)
 		)";
 
-		// Email Console Cache
-		// Emails sent from the member profile email console are saved here.
+        // Email Console Cache
+        // Emails sent from the member profile email console are saved here.
 
-		$Q[] = "CREATE TABLE exp_email_console_cache (
+        $Q[] = "CREATE TABLE exp_email_console_cache (
 			cache_id int(6) unsigned NOT NULL auto_increment,
 			cache_date int(10) unsigned default '0' NOT NULL,
 			member_id int(10) unsigned NOT NULL,
@@ -271,10 +272,10 @@ class EE_Schema {
 			PRIMARY KEY `cache_id` (`cache_id`)
 		)";
 
-		// Member table
-		// Contains the member info
+        // Member table
+        // Contains the member info
 
-		$Q[] = "CREATE TABLE exp_members (
+        $Q[] = "CREATE TABLE exp_members (
 			member_id int(10) unsigned NOT NULL auto_increment,
 			group_id smallint(4) NOT NULL default '0',
 			username varchar(50) NOT NULL,
@@ -360,11 +361,11 @@ class EE_Schema {
 			KEY `password` (`password`)
 		)";
 
-		// CP homepage layout
-		// Each member can have their own control panel layout.
-		// We store their preferences here.
+        // CP homepage layout
+        // Each member can have their own control panel layout.
+        // We store their preferences here.
 
-		$Q[] = "CREATE TABLE exp_member_homepage (
+        $Q[] = "CREATE TABLE exp_member_homepage (
 			member_id int(10) unsigned NOT NULL,
 			recent_entries char(1) NOT NULL default 'l',
 			recent_entries_order int(3) unsigned NOT NULL default '0',
@@ -386,9 +387,9 @@ class EE_Schema {
 		)";
 
 
-		// Member Groups table
+        // Member Groups table
 
-		$Q[] = "CREATE TABLE exp_member_groups (
+        $Q[] = "CREATE TABLE exp_member_groups (
 			`group_id` smallint(4) unsigned NOT NULL,
 			`site_id` int(4) unsigned NOT NULL DEFAULT '1',
 			`menu_set_id` int(5) unsigned NOT NULL DEFAULT '1',
@@ -497,38 +498,38 @@ class EE_Schema {
 			PRIMARY KEY `group_id_site_id` (`group_id`, `site_id`)
 		)";
 
-		// Channel access privs
-		// Member groups assignment for each channel
+        // Channel access privs
+        // Member groups assignment for each channel
 
-		$Q[] = "CREATE TABLE exp_channel_member_groups (
+        $Q[] = "CREATE TABLE exp_channel_member_groups (
 			group_id smallint(4) unsigned NOT NULL,
 			channel_id int(6) unsigned NOT NULL,
 			PRIMARY KEY `group_id_channel_id` (`group_id`, `channel_id`)
 		)";
 
-		// Module access privs
-		// Member Group assignment for each module
+        // Module access privs
+        // Member Group assignment for each module
 
-		$Q[] = "CREATE TABLE exp_module_member_groups (
+        $Q[] = "CREATE TABLE exp_module_member_groups (
 			group_id smallint(4) unsigned NOT NULL,
 			module_id mediumint(5) unsigned NOT NULL,
 			PRIMARY KEY `group_id_module_id` (`group_id`, `module_id`)
 		)";
 
 
-		// Template Group access privs
-		// Member group assignment for each template group
+        // Template Group access privs
+        // Member group assignment for each template group
 
-		$Q[] = "CREATE TABLE exp_template_member_groups (
+        $Q[] = "CREATE TABLE exp_template_member_groups (
 			group_id smallint(4) unsigned NOT NULL,
 			template_group_id mediumint(5) unsigned NOT NULL,
 			PRIMARY KEY `group_id_template_group_id` (`group_id`, `template_group_id`)
 		)";
 
-		// Member Custom Fields
-		// Stores the defenition of each field
+        // Member Custom Fields
+        // Stores the defenition of each field
 
-		$Q[] = "CREATE TABLE exp_member_fields (
+        $Q[] = "CREATE TABLE exp_member_fields (
 			m_field_id int(4) unsigned NOT NULL auto_increment,
 			m_field_name varchar(32) NOT NULL,
 			m_field_label varchar(50) NOT NULL,
@@ -550,19 +551,19 @@ class EE_Schema {
 			PRIMARY KEY `m_field_id` (`m_field_id`)
 			)";
 
-		// Member Data
-		// Stores the actual data
+        // Member Data
+        // Stores the actual data
 
-		$Q[] = "CREATE TABLE exp_member_data (
+        $Q[] = "CREATE TABLE exp_member_data (
 			member_id int(10) unsigned NOT NULL,
 			PRIMARY KEY `member_id` (`member_id`)
 		)";
 
-		// Channel Table
+        // Channel Table
 
-		// @confirm: I changed comment_max_chars from a NULL default to 5000 - DA
+        // @confirm: I changed comment_max_chars from a NULL default to 5000 - DA
 
-		$Q[] = "CREATE TABLE exp_channels (
+        $Q[] = "CREATE TABLE exp_channels (
 			channel_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			channel_name varchar(40) NOT NULL,
@@ -622,10 +623,10 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Channel Titles
-		// We store channel titles separately from channel data
+        // Channel Titles
+        // We store channel titles separately from channel data
 
-		$Q[] = "CREATE TABLE exp_channel_titles (
+        $Q[] = "CREATE TABLE exp_channel_titles (
 			entry_id int(10) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			channel_id int(4) unsigned NOT NULL,
@@ -661,9 +662,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Channel Titles Autosave
-		// Used for the autosave functionality
-		$Q[] = "CREATE TABLE exp_channel_entries_autosave (
+        // Channel Titles Autosave
+        // Used for the autosave functionality
+        $Q[] = "CREATE TABLE exp_channel_entries_autosave (
 			entry_id int(10) unsigned NOT NULL auto_increment,
 			original_entry_id int(10) unsigned NOT NULL,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
@@ -701,7 +702,7 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		$Q[] = "CREATE TABLE exp_entry_versioning (
+        $Q[] = "CREATE TABLE exp_entry_versioning (
 			version_id int(10) unsigned NOT NULL auto_increment,
 			entry_id int(10) unsigned NOT NULL,
 			channel_id int(4) unsigned NOT NULL,
@@ -712,9 +713,9 @@ class EE_Schema {
 			KEY `entry_id` (`entry_id`)
 		)";
 
-		// Channel Custom Field Groups
+        // Channel Custom Field Groups
 
-		$Q[] = "CREATE TABLE exp_field_groups (
+        $Q[] = "CREATE TABLE exp_field_groups (
 			group_id int(4) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_name varchar(50) NOT NULL,
@@ -722,9 +723,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Channel Custom Field Definitions
+        // Channel Custom Field Definitions
 
-		$Q[] = "CREATE TABLE exp_channel_fields (
+        $Q[] = "CREATE TABLE exp_channel_fields (
 			field_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_id int(4) unsigned NOT NULL,
@@ -753,9 +754,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Frontend Channel Form Settings
+        // Frontend Channel Form Settings
 
-		$Q[] = "CREATE TABLE `exp_channel_form_settings` (
+        $Q[] = "CREATE TABLE `exp_channel_form_settings` (
 			`channel_form_settings_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`site_id` int(4) unsigned NOT NULL DEFAULT '0',
 			`channel_id` int(6) unsigned NOT NULL DEFAULT '0',
@@ -767,9 +768,9 @@ class EE_Schema {
 			KEY `channel_id` (`channel_id`)
 		)";
 
-		// Relationships table
+        // Relationships table
 
-		$Q[] = "CREATE TABLE exp_relationships (
+        $Q[] = "CREATE TABLE exp_relationships (
 			relationship_id int(6) UNSIGNED NOT NULL auto_increment,
 			parent_id int(10) UNSIGNED NOT NULL default 0,
 			child_id int(10) UNSIGNED NOT NULL default 0,
@@ -785,8 +786,8 @@ class EE_Schema {
 			KEY `grid_row_id` (`grid_row_id`)
 		)";
 
-		// Channel data
-		$Q[] = "CREATE TABLE exp_channel_data (
+        // Channel data
+        $Q[] = "CREATE TABLE exp_channel_data (
 			entry_id int(10) unsigned NOT NULL,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			channel_id int(4) unsigned NOT NULL,
@@ -795,9 +796,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Status Groups
+        // Status Groups
 
-		$Q[] = "CREATE TABLE exp_status_groups (
+        $Q[] = "CREATE TABLE exp_status_groups (
 			group_id int(4) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_name varchar(50) NOT NULL,
@@ -805,9 +806,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Status data
+        // Status data
 
-		$Q[] = "CREATE TABLE exp_statuses (
+        $Q[] = "CREATE TABLE exp_statuses (
 			status_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_id int(4) unsigned NOT NULL,
@@ -819,18 +820,18 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Status "no access"
-		// Stores groups that can not access certain statuses
+        // Status "no access"
+        // Stores groups that can not access certain statuses
 
-		$Q[] = "CREATE TABLE exp_status_no_access (
+        $Q[] = "CREATE TABLE exp_status_no_access (
 			status_id int(6) unsigned NOT NULL,
 			member_group smallint(4) unsigned NOT NULL,
 			PRIMARY KEY `status_id_member_group` (`status_id`, `member_group`)
 		)";
 
-		// Category Groups
+        // Category Groups
 
-		$Q[] = "CREATE TABLE exp_category_groups (
+        $Q[] = "CREATE TABLE exp_category_groups (
 			group_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_name varchar(50) NOT NULL,
@@ -843,9 +844,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Category data
+        // Category data
 
-		$Q[] = "CREATE TABLE exp_categories (
+        $Q[] = "CREATE TABLE exp_categories (
 			cat_id int(10) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_id int(6) unsigned NOT NULL,
@@ -861,7 +862,7 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_category_fields` (
+        $Q[] = "CREATE TABLE `exp_category_fields` (
 			`field_id` int(6) unsigned NOT NULL auto_increment,
 			`site_id` int(4) unsigned NOT NULL default 1,
 			`group_id` int(4) unsigned NOT NULL,
@@ -881,7 +882,7 @@ class EE_Schema {
 			KEY `group_id` (`group_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_category_field_data` (
+        $Q[] = "CREATE TABLE `exp_category_field_data` (
 			`cat_id` int(4) unsigned NOT NULL,
 			`site_id` int(4) unsigned NOT NULL default 1,
 			`group_id` int(4) unsigned NOT NULL,
@@ -891,19 +892,19 @@ class EE_Schema {
 		)";
 
 
-		// Category posts
-		// This table stores the channel entry ID and the category IDs
-		// that are assigned to it
+        // Category posts
+        // This table stores the channel entry ID and the category IDs
+        // that are assigned to it
 
-		$Q[] = "CREATE TABLE exp_category_posts (
+        $Q[] = "CREATE TABLE exp_category_posts (
 			entry_id int(10) unsigned NOT NULL,
 			cat_id int(10) unsigned NOT NULL,
 			PRIMARY KEY `entry_id_cat_id` (`entry_id`, `cat_id`)
 		)";
 
-		// Control panel log
+        // Control panel log
 
-		$Q[] = "CREATE TABLE exp_cp_log (
+        $Q[] = "CREATE TABLE exp_cp_log (
 			id int(10) NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			member_id int(10) unsigned NOT NULL,
@@ -915,11 +916,11 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// HTML buttons
-		// These are the buttons that appear on the PUBLISH page.
-		// Each member can have their own set of buttons
+        // HTML buttons
+        // These are the buttons that appear on the PUBLISH page.
+        // Each member can have their own set of buttons
 
-		$Q[] = "CREATE TABLE exp_html_buttons (
+        $Q[] = "CREATE TABLE exp_html_buttons (
 			id int(10) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			member_id int(10) default 0 NOT NULL,
@@ -934,9 +935,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Layout Publish
-		// Custom layout for for the publish page.
-		$Q[] = "CREATE TABLE exp_layout_publish (
+        // Layout Publish
+        // Custom layout for for the publish page.
+        $Q[] = "CREATE TABLE exp_layout_publish (
 			layout_id int(10) UNSIGNED NOT NULL auto_increment,
 			site_id int(4) UNSIGNED NOT NULL default 1,
 			channel_id int(4) UNSIGNED NOT NULL default 0,
@@ -947,15 +948,15 @@ class EE_Schema {
 			KEY `channel_id` (`channel_id`)
 		)";
 
-		$Q[] = "CREATE TABLE exp_layout_publish_member_groups (
+        $Q[] = "CREATE TABLE exp_layout_publish_member_groups (
 			layout_id int(10) UNSIGNED NOT NULL,
 			group_id int(4) UNSIGNED NOT NULL,
 			PRIMARY KEY `layout_id_group_id` (`layout_id`, `group_id`)
 		)";
 
-		// Template Groups
+        // Template Groups
 
-		$Q[] = "CREATE TABLE exp_template_groups (
+        $Q[] = "CREATE TABLE exp_template_groups (
 			group_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_name varchar(50) NOT NULL,
@@ -967,9 +968,9 @@ class EE_Schema {
 			KEY `group_order_idx` (`group_order`)
 		)";
 
-		// Template data
+        // Template data
 
-		$Q[] = "CREATE TABLE exp_templates (
+        $Q[] = "CREATE TABLE exp_templates (
 			template_id int(10) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			group_id int(6) unsigned NOT NULL,
@@ -993,9 +994,9 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Template Routes
+        // Template Routes
 
-		$Q[] = "CREATE TABLE `exp_template_routes` (
+        $Q[] = "CREATE TABLE `exp_template_routes` (
 			`route_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`template_id` int(10) unsigned NOT NULL,
 			`order` int(10) unsigned DEFAULT NULL,
@@ -1006,25 +1007,25 @@ class EE_Schema {
 			KEY `template_id` (`template_id`)
 		)";
 
-		// Template "no access"
-		// Since each template can be made private to specific member groups
-		// we store member IDs of people who can not access certain templates
+        // Template "no access"
+        // Since each template can be made private to specific member groups
+        // we store member IDs of people who can not access certain templates
 
-		$Q[] = "CREATE TABLE exp_template_no_access (
+        $Q[] = "CREATE TABLE exp_template_no_access (
 			template_id int(6) unsigned NOT NULL,
 			member_group smallint(4) unsigned NOT NULL,
 			PRIMARY KEY `template_id_member_group` (`template_id`, `member_group`)
 		)";
 
-		// Specialty Templates
-		// This table contains the various specialty templates, like:
-		// Admin notification of new members
-		// Admin notification of comments
-		// Membership activation instruction
-		// Member lost password instructions
-		// Validated member notification
+        // Specialty Templates
+        // This table contains the various specialty templates, like:
+        // Admin notification of new members
+        // Admin notification of comments
+        // Membership activation instruction
+        // Member lost password instructions
+        // Validated member notification
 
-		$Q[] = "CREATE TABLE exp_specialty_templates (
+        $Q[] = "CREATE TABLE exp_specialty_templates (
 			template_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			enable_template char(1) NOT NULL default 'y',
@@ -1041,10 +1042,10 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Global variables
-		// These are user-definable variables
+        // Global variables
+        // These are user-definable variables
 
-		$Q[] = "CREATE TABLE exp_global_variables (
+        $Q[] = "CREATE TABLE exp_global_variables (
 			variable_id int(6) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			variable_name varchar(50) NOT NULL,
@@ -1055,11 +1056,11 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Snippets
-		// These are user-definable early-parsed variables
-		// for holding dynamic content
+        // Snippets
+        // These are user-definable early-parsed variables
+        // for holding dynamic content
 
-		$Q[] = "CREATE TABLE `exp_snippets` (
+        $Q[] = "CREATE TABLE `exp_snippets` (
 			`snippet_id` int(10) unsigned NOT NULL auto_increment,
 			`site_id` int(4) NOT NULL,
 			`snippet_name` varchar(75) NOT NULL,
@@ -1069,11 +1070,11 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Revision tracker
-		// This is our versioning table, used to store each
-		// change that is made to a template.
+        // Revision tracker
+        // This is our versioning table, used to store each
+        // change that is made to a template.
 
-		$Q[] = "CREATE TABLE exp_revision_tracker (
+        $Q[] = "CREATE TABLE exp_revision_tracker (
 			tracker_id int(10) unsigned NOT NULL auto_increment,
 			item_id int(10) unsigned NOT NULL,
 			item_table varchar(20) NOT NULL,
@@ -1085,9 +1086,9 @@ class EE_Schema {
 			KEY `item_id` (`item_id`)
 		)";
 
-		// Upload preferences
+        // Upload preferences
 
-		$Q[] = "CREATE TABLE exp_upload_prefs (
+        $Q[] = "CREATE TABLE exp_upload_prefs (
 			id int(4) unsigned NOT NULL auto_increment,
 			site_id INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			name varchar(50) NOT NULL,
@@ -1111,18 +1112,18 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		// Upload "no access"
-		// We store the member groups that can not access various upload destinations
+        // Upload "no access"
+        // We store the member groups that can not access various upload destinations
 
-		$Q[] = "CREATE TABLE exp_upload_no_access (
+        $Q[] = "CREATE TABLE exp_upload_no_access (
 			upload_id int(6) unsigned NOT NULL,
 			member_group smallint(4) unsigned NOT NULL,
 			PRIMARY KEY `upload_id_member_group` (`upload_id`, `member_group`)
 		)";
 
-		// Private messaging tables
+        // Private messaging tables
 
-		$Q[] = "CREATE TABLE exp_message_attachments (
+        $Q[] = "CREATE TABLE exp_message_attachments (
 			attachment_id int(10) unsigned NOT NULL auto_increment,
 			sender_id int(10) unsigned NOT NULL default 0,
 			message_id int(10) unsigned NOT NULL default 0,
@@ -1136,7 +1137,7 @@ class EE_Schema {
 			PRIMARY KEY `attachment_id` (`attachment_id`)
 		)";
 
-		$Q[] = "CREATE TABLE exp_message_copies (
+        $Q[] = "CREATE TABLE exp_message_copies (
 			copy_id int(10) unsigned NOT NULL auto_increment,
 			message_id int(10) unsigned NOT NULL default 0,
 			sender_id int(10) unsigned NOT NULL default 0,
@@ -1155,7 +1156,7 @@ class EE_Schema {
 			KEY `sender_id` (`sender_id`)
 		)";
 
-		$Q[] = "CREATE TABLE exp_message_data (
+        $Q[] = "CREATE TABLE exp_message_data (
 			message_id int(10) unsigned NOT NULL auto_increment,
 			sender_id int(10) unsigned NOT NULL default 0,
 			message_date int(10) unsigned NOT NULL default 0,
@@ -1173,7 +1174,7 @@ class EE_Schema {
 			KEY `sender_id` (`sender_id`)
 		)";
 
-		$Q[] = "CREATE TABLE exp_message_folders (
+        $Q[] = "CREATE TABLE exp_message_folders (
 			member_id int(10) unsigned NOT NULL default 0,
 			folder1_name varchar(50) NOT NULL default 'InBox',
 			folder2_name varchar(50) NOT NULL default 'Sent',
@@ -1188,7 +1189,7 @@ class EE_Schema {
 			PRIMARY KEY `member_id` (`member_id`)
 		)";
 
-		$Q[] = "CREATE TABLE exp_message_listed (
+        $Q[] = "CREATE TABLE exp_message_listed (
 			listed_id int(10) unsigned NOT NULL auto_increment,
 			member_id int(10) unsigned NOT NULL default 0,
 			listed_member int(10) unsigned NOT NULL default 0,
@@ -1197,7 +1198,7 @@ class EE_Schema {
 			PRIMARY KEY `listed_id` (`listed_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_extensions` (
+        $Q[] = "CREATE TABLE `exp_extensions` (
 			`extension_id` int(10) unsigned NOT NULL auto_increment,
 			`class` varchar(50) NOT NULL default '',
 			`method` varchar(50) NOT NULL default '',
@@ -1209,7 +1210,7 @@ class EE_Schema {
 			PRIMARY KEY `extension_id` (`extension_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_member_search`(
+        $Q[] = "CREATE TABLE `exp_member_search`(
 			`search_id` varchar(32) NOT NULL,
 			`site_id` INT(4) UNSIGNED NOT NULL DEFAULT 1,
 			`search_date` int(10) unsigned NOT NULL,
@@ -1224,7 +1225,7 @@ class EE_Schema {
 			KEY `site_id` (`site_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_member_bulletin_board` (
+        $Q[] = "CREATE TABLE `exp_member_bulletin_board` (
 			`bulletin_id` int(10) unsigned NOT NULL auto_increment,
 			`sender_id` int(10) unsigned NOT NULL,
 			`bulletin_group` int(8) unsigned NOT NULL,
@@ -1237,16 +1238,16 @@ class EE_Schema {
 			KEY `hash` (`hash`)
 		)";
 
-		// Entity type table
-		$Q[] = "CREATE TABLE `exp_content_types` (
+        // Entity type table
+        $Q[] = "CREATE TABLE `exp_content_types` (
 			`content_type_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`name` varchar(50) NOT NULL DEFAULT '',
 			PRIMARY KEY (`content_type_id`),
 			KEY `name` (`name`)
 		)";
 
-		// Fieldtype table
-		$Q[] = "CREATE TABLE exp_fieldtypes (
+        // Fieldtype table
+        $Q[] = "CREATE TABLE exp_fieldtypes (
 			fieldtype_id int(4) unsigned NOT NULL auto_increment,
 			name varchar(50) NOT NULL,
 			version varchar(12) NOT NULL,
@@ -1256,8 +1257,8 @@ class EE_Schema {
 		)";
 
 
-		// Files table
-		$Q[] = "CREATE TABLE `exp_files` (
+        // Files table
+        $Q[] = "CREATE TABLE `exp_files` (
 			`file_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`site_id` int(4) unsigned DEFAULT '1',
 			`title` varchar(255) DEFAULT NULL,
@@ -1279,7 +1280,7 @@ class EE_Schema {
 		)";
 
 
-		$Q[] = "CREATE TABLE `exp_file_categories` (
+        $Q[] = "CREATE TABLE `exp_file_categories` (
 			`file_id` int(10) unsigned DEFAULT NULL,
 			`cat_id` int(10) unsigned DEFAULT NULL,
 			`sort` int(10) unsigned DEFAULT '0',
@@ -1288,7 +1289,7 @@ class EE_Schema {
 			KEY `cat_id` (`cat_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_file_dimensions` (
+        $Q[] = "CREATE TABLE `exp_file_dimensions` (
 			`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`site_id` int(4) unsigned NOT NULL DEFAULT '1',
 			`upload_location_id` int(4) unsigned DEFAULT NULL,
@@ -1302,7 +1303,7 @@ class EE_Schema {
 			KEY `upload_location_id` (`upload_location_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_file_watermarks` (
+        $Q[] = "CREATE TABLE `exp_file_watermarks` (
 			`wm_id` int(4) unsigned NOT NULL AUTO_INCREMENT,
 			`wm_name` varchar(80) DEFAULT NULL,
 			`wm_type` varchar(10) DEFAULT 'text',
@@ -1327,8 +1328,8 @@ class EE_Schema {
 			PRIMARY KEY (`wm_id`)
 		)";
 
-		// Developer log table
-		$Q[] = "CREATE TABLE `exp_developer_log` (
+        // Developer log table
+        $Q[] = "CREATE TABLE `exp_developer_log` (
 			`log_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`timestamp` int(10) unsigned NOT NULL,
 			`viewed` char(1) NOT NULL DEFAULT 'n',
@@ -1348,8 +1349,8 @@ class EE_Schema {
 			PRIMARY KEY (`log_id`)
 		)";
 
-		// Remember me table
-		$Q[] = "CREATE TABLE `exp_remember_me` (
+        // Remember me table
+        $Q[] = "CREATE TABLE `exp_remember_me` (
 			`remember_me_id` varchar(40) NOT NULL DEFAULT '0',
 			`member_id` int(10) DEFAULT '0',
 			`ip_address` varchar(45) DEFAULT '0',
@@ -1362,7 +1363,7 @@ class EE_Schema {
 			KEY `member_id` (`member_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_grid_columns` (
+        $Q[] = "CREATE TABLE `exp_grid_columns` (
 			`col_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 			`field_id` int(10) unsigned DEFAULT NULL,
 			`content_type` varchar(50) DEFAULT NULL,
@@ -1379,13 +1380,13 @@ class EE_Schema {
 			KEY `field_id` (`field_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_menu_sets` (
+        $Q[] = "CREATE TABLE `exp_menu_sets` (
   			`set_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   			`name` varchar(50) DEFAULT NULL,
   			PRIMARY KEY (`set_id`)
 		)";
 
-		$Q[] = "CREATE TABLE `exp_menu_items` (
+        $Q[] = "CREATE TABLE `exp_menu_items` (
 		  `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
 		  `parent_id` int(10) NOT NULL DEFAULT '0',
 		  `set_id` int(10) DEFAULT NULL,
@@ -1397,305 +1398,297 @@ class EE_Schema {
 		  KEY `set_id` (`set_id`)
 	  	)";
 
-		// Default menu set
-		$Q[] = "INSERT INTO exp_menu_sets(name) VALUES ('Default')";
+        // Default menu set
+        $Q[] = "INSERT INTO exp_menu_sets(name) VALUES ('Default')";
 
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
-		//  Specialty Templates
-		//  - The methods are by default in email_data.php but can be overloaded if there is a
-		//	speciality_templates.php file in the chosen Site Theme folder
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        //  Specialty Templates
+        //  - The methods are by default in email_data.php but can be overloaded if there is a
+        //	speciality_templates.php file in the chosen Site Theme folder
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
 
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, edit_date, data_title, template_data) VALUES ('offline_template', 'system', " . time() . ", '', '".addslashes(offline_template())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, edit_date, data_title, template_data) VALUES ('message_template', 'system', " . time() . ", '', '".addslashes(message_template())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('admin_notify_reg', 'email', 'members', " . time() . ", '".addslashes(trim(admin_notify_reg_title()))."', '".addslashes(admin_notify_reg())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('admin_notify_entry', 'email', 'content', " . time() . ", '".addslashes(trim(admin_notify_entry_title()))."', '".addslashes(admin_notify_entry())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('admin_notify_comment', 'email', 'comments', " . time() . ", '".addslashes(trim(admin_notify_comment_title()))."', '".addslashes(admin_notify_comment())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('mbr_activation_instructions', 'email', 'members', " . time() . ", '".addslashes(trim(mbr_activation_instructions_title()))."', '".addslashes(mbr_activation_instructions())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('forgot_password_instructions', 'email', 'members', " . time() . ", '".addslashes(trim(forgot_password_instructions_title()))."', '".addslashes(forgot_password_instructions())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('validated_member_notify', 'email', 'members', " . time() . ", '".addslashes(trim(validated_member_notify_title()))."', '".addslashes(validated_member_notify())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('decline_member_validation', 'email', 'members', " . time() . ", '".addslashes(trim(decline_member_validation_title()))."', '".addslashes(decline_member_validation())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('comment_notification', 'email', 'comments', " . time() . ", '".addslashes(trim(comment_notification_title()))."', '".addslashes(comment_notification())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('comments_opened_notification', 'email', 'comments', " . time() . ", '".addslashes(trim(comments_opened_notification_title()))."', '".addslashes(comments_opened_notification())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('private_message_notification', 'email', 'private_messages', " . time() . ", '".addslashes(trim(private_message_notification_title()))."', '".addslashes(private_message_notification())."')";
-		$Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('pm_inbox_full', 'email', 'private_messages', " . time() . ", '".addslashes(trim(pm_inbox_full_title()))."', '".addslashes(pm_inbox_full())."')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, edit_date, data_title, template_data) VALUES ('offline_template', 'system', " . time() . ", '', '" . addslashes(offline_template()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, edit_date, data_title, template_data) VALUES ('message_template', 'system', " . time() . ", '', '" . addslashes(message_template()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('admin_notify_reg', 'email', 'members', " . time() . ", '" . addslashes(trim(admin_notify_reg_title())) . "', '" . addslashes(admin_notify_reg()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('admin_notify_entry', 'email', 'content', " . time() . ", '" . addslashes(trim(admin_notify_entry_title())) . "', '" . addslashes(admin_notify_entry()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('admin_notify_comment', 'email', 'comments', " . time() . ", '" . addslashes(trim(admin_notify_comment_title())) . "', '" . addslashes(admin_notify_comment()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('mbr_activation_instructions', 'email', 'members', " . time() . ", '" . addslashes(trim(mbr_activation_instructions_title())) . "', '" . addslashes(mbr_activation_instructions()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('forgot_password_instructions', 'email', 'members', " . time() . ", '" . addslashes(trim(forgot_password_instructions_title())) . "', '" . addslashes(forgot_password_instructions()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('validated_member_notify', 'email', 'members', " . time() . ", '" . addslashes(trim(validated_member_notify_title())) . "', '" . addslashes(validated_member_notify()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('decline_member_validation', 'email', 'members', " . time() . ", '" . addslashes(trim(decline_member_validation_title())) . "', '" . addslashes(decline_member_validation()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('comment_notification', 'email', 'comments', " . time() . ", '" . addslashes(trim(comment_notification_title())) . "', '" . addslashes(comment_notification()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('comments_opened_notification', 'email', 'comments', " . time() . ", '" . addslashes(trim(comments_opened_notification_title())) . "', '" . addslashes(comments_opened_notification()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('private_message_notification', 'email', 'private_messages', " . time() . ", '" . addslashes(trim(private_message_notification_title())) . "', '" . addslashes(private_message_notification()) . "')";
+        $Q[] = "INSERT INTO exp_specialty_templates(template_name, template_type, template_subtype, edit_date, data_title, template_data) VALUES ('pm_inbox_full', 'email', 'private_messages', " . time() . ", '" . addslashes(trim(pm_inbox_full_title())) . "', '" . addslashes(pm_inbox_full()) . "')";
 
 
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
-		//  Default Site Data - CANNOT BE CHANGED
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        //  Default Site Data - CANNOT BE CHANGED
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
 
-		// Register the default admin
-		//		$quick_link = 'My Site|'.$this->userdata['site_url'].$this->userdata['site_index'].'|1';
-		$quick_link = '';
+        // Register the default admin
+        //		$quick_link = 'My Site|'.$this->userdata['site_url'].$this->userdata['site_index'].'|1';
+        $quick_link = '';
 
-		$Q[] = "INSERT INTO exp_members (group_id, username, password, salt, unique_id, email, screen_name, join_date, ip_address, timezone, quick_links, language)
+        $Q[] = "INSERT INTO exp_members (group_id, username, password, salt, unique_id, email, screen_name, join_date, ip_address, timezone, quick_links, language)
 			VALUES (
 				'1',
-				'".ee()->db->escape_str($this->userdata['username'])."',
-				'".$this->userdata['password']."',
-				'".ee()->db->escape_str($this->userdata['salt'])."',
-				'".$this->userdata['unique_id']."',
-				'".ee()->db->escape_str($this->userdata['email_address'])."',
-				'".ee()->db->escape_str($this->userdata['screen_name'])."',
-				'".$this->now."',
-				'".ee()->input->ip_address()."',
-				'".$this->userdata['default_site_timezone']."',
+				'" . ee()->db->escape_str($this->userdata['username']) . "',
+				'" . $this->userdata['password'] . "',
+				'" . ee()->db->escape_str($this->userdata['salt']) . "',
+				'" . $this->userdata['unique_id'] . "',
+				'" . ee()->db->escape_str($this->userdata['email_address']) . "',
+				'" . ee()->db->escape_str($this->userdata['screen_name']) . "',
+				'" . $this->now . "',
+				'" . ee()->input->ip_address() . "',
+				'" . $this->userdata['default_site_timezone'] . "',
 				'$quick_link',
-				'".ee()->db->escape_str($this->userdata['deft_lang'])."')";
+				'" . ee()->db->escape_str($this->userdata['deft_lang']) . "')";
 
-		$Q[] = "INSERT INTO exp_member_homepage (member_id, recent_entries_order, recent_comments_order, site_statistics_order, notepad_order, pmachine_news_feed)
+        $Q[] = "INSERT INTO exp_member_homepage (member_id, recent_entries_order, recent_comments_order, site_statistics_order, notepad_order, pmachine_news_feed)
 			VALUES ('1', '1', '2', '1', '2', 'l')";
 
-		$Q[] = "INSERT INTO exp_member_data (member_id) VALUES ('1')";
+        $Q[] = "INSERT INTO exp_member_data (member_id) VALUES ('1')";
 
-		// Default system stats
+        // Default system stats
 
-		$Q[] = "INSERT INTO exp_stats (total_members, total_entries, last_entry_date, recent_member, recent_member_id, last_cache_clear)
-			VALUES ('1', '0', '".$this->now."', '".ee()->db->escape_str($this->userdata['screen_name'])."', '1', '".$this->now."')";
+        $Q[] = "INSERT INTO exp_stats (total_members, total_entries, last_entry_date, recent_member, recent_member_id, last_cache_clear)
+			VALUES ('1', '0', '" . $this->now . "', '" . ee()->db->escape_str($this->userdata['screen_name']) . "', '1', '" . $this->now . "')";
 
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
-		//  Customizable Site Data, Woot!
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        //  Customizable Site Data, Woot!
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
 
-		// Default Site
-		$site = array(
-			'site_id' 		=> 1,
-			'site_label'	=> $this->userdata['site_label'],
-			'site_name'		=> $this->userdata['site_name'],
-			'site_system_preferences'      => '',
-			'site_member_preferences'      => '',
-			'site_template_preferences'    => '',
-			'site_channel_preferences'     => '',
-			'site_bootstrap_checksums'     => '',
-			'site_pages'                   => '',
-		);
+        // Default Site
+        $site = array(
+            'site_id' => 1,
+            'site_label' => $this->userdata['site_label'],
+            'site_name' => $this->userdata['site_name'],
+            'site_system_preferences' => '',
+            'site_member_preferences' => '',
+            'site_template_preferences' => '',
+            'site_channel_preferences' => '',
+            'site_bootstrap_checksums' => '',
+            'site_pages' => '',
+        );
 
-		$Q[] = ee()->db->insert_string('sites', $site);
+        $Q[] = ee()->db->insert_string('sites', $site);
 
-		// Member Groups
-		$member_groups = array(
-			array(
-				'group_title'                    => 'Super Admin',
-				'group_id'                       => 1,
-				'is_locked'                      => 'y',
-				'can_view_offline_system'        => 'y',
-				'can_access_cp'                  => 'y',
-				'can_access_footer_report_bug'   => 'y',
-				'can_access_footer_new_ticket'   => 'y',
-				'can_access_footer_user_guide'   => 'y',
-				'can_view_homepage_news'         => 'y',
-				'can_upload_new_files'           => 'y',
-				'can_edit_files'                 => 'y',
-				'can_delete_files'               => 'y',
-				'can_upload_new_toolsets'        => 'y',
-				'can_edit_toolsets'              => 'y',
-				'can_delete_toolsets'            => 'y',
-				'can_create_upload_directories'  => 'y',
-				'can_edit_upload_directories'    => 'y',
-				'can_delete_upload_directories'  => 'y',
-				'can_access_files'               => 'y',
-				'can_access_design'              => 'y',
-				'can_access_addons'              => 'y',
-				'can_access_members'             => 'y',
-				'can_access_sys_prefs'           => 'y',
-				'can_access_comm'                => 'y',
-				'can_access_utilities'           => 'y',
-				'can_access_data'                => 'y',
-				'can_access_logs'                => 'y',
-				'can_admin_channels'             => 'y',
-				'can_create_channels'            => 'y',
-				'can_edit_channels'              => 'y',
-				'can_delete_channels'            => 'y',
-				'can_create_channel_fields'      => 'y',
-				'can_edit_channel_fields'        => 'y',
-				'can_delete_channel_fields'      => 'y',
-				'can_create_statuses'            => 'y',
-				'can_delete_statuses'            => 'y',
-				'can_edit_statuses'              => 'y',
-				'can_create_categories'          => 'y',
-				'can_create_member_groups'       => 'y',
-				'can_delete_member_groups'       => 'y',
-				'can_edit_member_groups'         => 'y',
-				'can_admin_design'               => 'y',
-				'can_create_members'             => 'y',
-				'can_edit_members'               => 'y',
-				'can_delete_members'             => 'y',
-				'can_admin_mbr_groups'           => 'y',
-				'can_admin_mbr_templates'        => 'y',
-				'can_ban_users'                  => 'y',
-				'can_admin_addons'               => 'y',
-				'can_create_new_templates'       => 'y',
-				'can_edit_templates'             => 'y',
-				'can_delete_templates'           => 'y',
-				'can_create_template_groups'     => 'y',
-				'can_edit_template_groups'       => 'y',
-				'can_delete_template_groups'     => 'y',
-				'can_create_template_partials'   => 'y',
-				'can_edit_template_partials'     => 'y',
-				'can_delete_template_partials'   => 'y',
-				'can_create_template_variables'  => 'y',
-				'can_delete_template_variables'  => 'y',
-				'can_edit_template_variables'    => 'y',
-				'can_edit_categories'            => 'y',
-				'can_delete_categories'          => 'y',
-				'can_view_other_entries'         => 'y',
-				'can_edit_other_entries'         => 'y',
-				'can_assign_post_authors'        => 'y',
-				'can_delete_self_entries'        => 'y',
-				'can_delete_all_entries'         => 'y',
-				'can_view_other_comments'        => 'y',
-				'can_edit_own_comments'          => 'y',
-				'can_delete_own_comments'        => 'y',
-				'can_edit_all_comments'          => 'y',
-				'can_delete_all_comments'        => 'y',
-				'can_moderate_comments'          => 'y',
-				'can_send_cached_email'          => 'y',
-				'can_email_member_groups'        => 'y',
-				'can_email_from_profile'         => 'y',
-				'can_view_profiles'              => 'y',
-				'can_edit_html_buttons'          => 'y',
-				'can_post_comments'              => 'y',
-				'can_delete_self'                => 'y',
-				'exclude_from_moderation'        => 'y',
-				'can_send_private_messages'      => 'y',
-				'can_attach_in_private_messages' => 'y',
-				'can_send_bulletins'             => 'y',
-				'include_in_authorlist'          => 'y',
-				'can_search'                     => 'y',
-				'can_create_entries'             => 'y',
-				'can_edit_self_entries'          => 'y',
-				'can_access_security_settings'   => 'y',
-				'can_access_translate'           => 'y',
-				'can_access_import'              => 'y',
-				'can_access_sql_manager'         => 'y',
-				'search_flood_control'           => '0'
-			),
-			array(
-				'group_title'                    => 'Banned',
-				'group_id'                       => 2,
-				'can_access_cp'                  => 'n',
-				'can_view_online_system'         => 'n',
-				'can_search'                     => 'n',
-				'can_post_comments'              => 'n',
-				'include_in_memberlist'          => 'n',
-				'search_flood_control'           => '60'
-			),
-			array(
-				'group_title'                    => 'Guests',
-				'group_id'                       => 3,
-				'can_access_cp'                  => 'n',
-				'search_flood_control'           => '10'
-			),
-			array(
-				'group_title'                    => 'Pending',
-				'group_id'                       => 4,
-				'can_access_cp'                  => 'n',
-				'search_flood_control'           => '10'
-			),
-			array(
-				'group_title'                    => 'Members',
-				'group_id'                       => 5,
-				'can_access_cp'                  => 'n',
-				'can_email_from_profile'         => 'y',
-				'can_view_profiles'              => 'y',
-				'can_edit_html_buttons'          => 'y',
-				'can_delete_self'                => 'y',
-				'can_send_private_messages'      => 'y',
-				'can_attach_in_private_messages' => 'y',
-				'search_flood_control'           => '10'
-			)
-		);
+        // Member Groups
+        $member_groups = array(
+            array(
+                'group_title' => 'Super Admin',
+                'group_id' => 1,
+                'is_locked' => 'y',
+                'can_view_offline_system' => 'y',
+                'can_access_cp' => 'y',
+                'can_access_footer_report_bug' => 'y',
+                'can_access_footer_new_ticket' => 'y',
+                'can_access_footer_user_guide' => 'y',
+                'can_view_homepage_news' => 'y',
+                'can_upload_new_files' => 'y',
+                'can_edit_files' => 'y',
+                'can_delete_files' => 'y',
+                'can_upload_new_toolsets' => 'y',
+                'can_edit_toolsets' => 'y',
+                'can_delete_toolsets' => 'y',
+                'can_create_upload_directories' => 'y',
+                'can_edit_upload_directories' => 'y',
+                'can_delete_upload_directories' => 'y',
+                'can_access_files' => 'y',
+                'can_access_design' => 'y',
+                'can_access_addons' => 'y',
+                'can_access_members' => 'y',
+                'can_access_sys_prefs' => 'y',
+                'can_access_comm' => 'y',
+                'can_access_utilities' => 'y',
+                'can_access_data' => 'y',
+                'can_access_logs' => 'y',
+                'can_admin_channels' => 'y',
+                'can_create_channels' => 'y',
+                'can_edit_channels' => 'y',
+                'can_delete_channels' => 'y',
+                'can_create_channel_fields' => 'y',
+                'can_edit_channel_fields' => 'y',
+                'can_delete_channel_fields' => 'y',
+                'can_create_statuses' => 'y',
+                'can_delete_statuses' => 'y',
+                'can_edit_statuses' => 'y',
+                'can_create_categories' => 'y',
+                'can_create_member_groups' => 'y',
+                'can_delete_member_groups' => 'y',
+                'can_edit_member_groups' => 'y',
+                'can_admin_design' => 'y',
+                'can_create_members' => 'y',
+                'can_edit_members' => 'y',
+                'can_delete_members' => 'y',
+                'can_admin_mbr_groups' => 'y',
+                'can_admin_mbr_templates' => 'y',
+                'can_ban_users' => 'y',
+                'can_admin_addons' => 'y',
+                'can_create_new_templates' => 'y',
+                'can_edit_templates' => 'y',
+                'can_delete_templates' => 'y',
+                'can_create_template_groups' => 'y',
+                'can_edit_template_groups' => 'y',
+                'can_delete_template_groups' => 'y',
+                'can_create_template_partials' => 'y',
+                'can_edit_template_partials' => 'y',
+                'can_delete_template_partials' => 'y',
+                'can_create_template_variables' => 'y',
+                'can_delete_template_variables' => 'y',
+                'can_edit_template_variables' => 'y',
+                'can_edit_categories' => 'y',
+                'can_delete_categories' => 'y',
+                'can_view_other_entries' => 'y',
+                'can_edit_other_entries' => 'y',
+                'can_assign_post_authors' => 'y',
+                'can_delete_self_entries' => 'y',
+                'can_delete_all_entries' => 'y',
+                'can_view_other_comments' => 'y',
+                'can_edit_own_comments' => 'y',
+                'can_delete_own_comments' => 'y',
+                'can_edit_all_comments' => 'y',
+                'can_delete_all_comments' => 'y',
+                'can_moderate_comments' => 'y',
+                'can_send_cached_email' => 'y',
+                'can_email_member_groups' => 'y',
+                'can_email_from_profile' => 'y',
+                'can_view_profiles' => 'y',
+                'can_edit_html_buttons' => 'y',
+                'can_post_comments' => 'y',
+                'can_delete_self' => 'y',
+                'exclude_from_moderation' => 'y',
+                'can_send_private_messages' => 'y',
+                'can_attach_in_private_messages' => 'y',
+                'can_send_bulletins' => 'y',
+                'include_in_authorlist' => 'y',
+                'can_search' => 'y',
+                'can_create_entries' => 'y',
+                'can_edit_self_entries' => 'y',
+                'can_access_security_settings' => 'y',
+                'can_access_translate' => 'y',
+                'can_access_import' => 'y',
+                'can_access_sql_manager' => 'y',
+                'search_flood_control' => '0'
+            ),
+            array(
+                'group_title' => 'Banned',
+                'group_id' => 2,
+                'can_access_cp' => 'n',
+                'can_view_online_system' => 'n',
+                'can_search' => 'n',
+                'can_post_comments' => 'n',
+                'include_in_memberlist' => 'n',
+                'search_flood_control' => '60'
+            ),
+            array(
+                'group_title' => 'Guests',
+                'group_id' => 3,
+                'can_access_cp' => 'n',
+                'search_flood_control' => '10'
+            ),
+            array(
+                'group_title' => 'Pending',
+                'group_id' => 4,
+                'can_access_cp' => 'n',
+                'search_flood_control' => '10'
+            ),
+            array(
+                'group_title' => 'Members',
+                'group_id' => 5,
+                'can_access_cp' => 'n',
+                'can_email_from_profile' => 'y',
+                'can_view_profiles' => 'y',
+                'can_edit_html_buttons' => 'y',
+                'can_delete_self' => 'y',
+                'can_send_private_messages' => 'y',
+                'can_attach_in_private_messages' => 'y',
+                'search_flood_control' => '10'
+            )
+        );
 
-		$member_group_defaults = array(
-			'group_description' => ''
-		);
+        $member_group_defaults = array(
+            'group_description' => ''
+        );
 
-		$add_quotes = function($value) {
-			return (is_string($value)) ? "'{$value}'" : $value;
-		};
+        $add_quotes = function ($value) {
+            return (is_string($value)) ? "'{$value}'" : $value;
+        };
 
-		foreach ($member_groups as $group)
-		{
-			// Merge in defaults
-			$group = array_merge($member_group_defaults, $group);
+        foreach ($member_groups as $group) {
+            // Merge in defaults
+            $group = array_merge($member_group_defaults, $group);
 
-			$Q[] = "INSERT INTO exp_member_groups
-				(".implode(', ', array_keys($group)).")
-				VALUES (".implode(', ' , array_map($add_quotes, $group)).")";
-		}
+            $Q[] = "INSERT INTO exp_member_groups
+				(" . implode(', ', array_keys($group)) . ")
+				VALUES (" . implode(', ', array_map($add_quotes, $group)) . ")";
+        }
 
-		// default statuses - these are really always needed
-		$Q[] = "INSERT INTO `exp_status_groups` (`group_id`, `site_id`, `group_name`) VALUES (1, 1, 'Default')";
-		$Q[] = "INSERT INTO exp_statuses (group_id, status, status_order, highlight) VALUES ('1', 'open', '1', '009933')";
-		$Q[] = "INSERT INTO exp_statuses (group_id, status, status_order, highlight) VALUES ('1', 'closed', '2', '990000')";
+        // default statuses - these are really always needed
+        $Q[] = "INSERT INTO `exp_status_groups` (`group_id`, `site_id`, `group_name`) VALUES (1, 1, 'Default')";
+        $Q[] = "INSERT INTO exp_statuses (group_id, status, status_order, highlight) VALUES ('1', 'open', '1', '009933')";
+        $Q[] = "INSERT INTO exp_statuses (group_id, status, status_order, highlight) VALUES ('1', 'closed', '2', '990000')";
 
-		$button_config = ee()->config->loadFile('html_buttons');
+        $button_config = ee()->config->loadFile('html_buttons');
 
-		$installation_defaults = $button_config['defaults'];
-		$predefined_buttons = $button_config['buttons'];
+        $installation_defaults = $button_config['defaults'];
+        $predefined_buttons = $button_config['buttons'];
 
-		$buttoncount = 1;
+        $buttoncount = 1;
 
-		foreach ($installation_defaults as $button)
-		{
-			$Q[] = "INSERT INTO exp_html_buttons (site_id, member_id, tag_name, tag_open, tag_close, accesskey, tag_order, tag_row, classname)
-				values (1, '0', '".$predefined_buttons[$button]['tag_name']."', '".$predefined_buttons[$button]['tag_open']."', '".$predefined_buttons[$button]['tag_close']."', '".$predefined_buttons[$button]['accesskey']."', '".$buttoncount++."', '1', '".$predefined_buttons[$button]['classname']."')";
-		}
+        foreach ($installation_defaults as $button) {
+            $Q[] = "INSERT INTO exp_html_buttons (site_id, member_id, tag_name, tag_open, tag_close, accesskey, tag_order, tag_row, classname)
+				values (1, '0', '" . $predefined_buttons[$button]['tag_name'] . "', '" . $predefined_buttons[$button]['tag_open'] . "', '" . $predefined_buttons[$button]['tag_close'] . "', '" . $predefined_buttons[$button]['accesskey'] . "', '" . $buttoncount++ . "', '1', '" . $predefined_buttons[$button]['classname'] . "')";
+        }
 
-		// Default field types
-		$default_fts = array('select', 'text', 'textarea', 'date', 'email_address', 'file', 'grid', 'multi_select', 'checkboxes', 'radio', 'relationship', 'rte', 'toggle', 'url');
+        // Default field types
+        $default_fts = array('select', 'text', 'textarea', 'date', 'email_address', 'file', 'grid', 'multi_select', 'checkboxes', 'radio', 'relationship', 'rte', 'toggle', 'url');
 
-		foreach($default_fts as $name)
-		{
-			$fieldtype = require SYSPATH.'/ee/EllisLab/Addons/'.$name.'/addon.setup.php';
+        foreach ($default_fts as $name) {
+            $fieldtype = require SYSPATH . '/ee/EllisLab/Addons/' . $name . '/addon.setup.php';
 
-			$Q[] = "INSERT INTO `exp_fieldtypes`
+            $Q[] = "INSERT INTO `exp_fieldtypes`
 				(`name`,`version`,`settings`,`has_global_settings`)
 				VALUES ('" . $name . "','" . $fieldtype['version'] . "','YTowOnt9','n')";
-		}
+        }
 
-		// Add Grid as a content type
-		$Q[] = "INSERT INTO `exp_content_types` (`name`) VALUES ('grid')";
+        // Add Grid as a content type
+        $Q[] = "INSERT INTO `exp_content_types` (`name`) VALUES ('grid')";
 
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
-		//  Create DB tables and insert data
-		// --------------------------------------------------------------------
-		// --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
+        //  Create DB tables and insert data
+        // --------------------------------------------------------------------
+        // --------------------------------------------------------------------
 
-		foreach(ee()->db->list_tables(TRUE) as $kill)
-		{
-			ee()->db->query('DROP TABLE IF EXISTS '.$kill);
-		}
+        foreach (ee()->db->list_tables(TRUE) as $kill) {
+            ee()->db->query('DROP TABLE IF EXISTS ' . $kill);
+        }
 
-		foreach($Q as $sql)
-		{
-			if (strncmp($sql, 'CREATE TABLE', 12) == 0)
-			{
-				$sql .= 'ENGINE=' . $this->default_engine . ' ';
-				$sql .= 'DEFAULT CHARACTER SET '.ee()->db->escape_str(ee()->db->char_set).' COLLATE '.ee()->db->escape_str(ee()->db->dbcollat);
-			}
+        foreach ($Q as $sql) {
+            if (strncmp($sql, 'CREATE TABLE', 12) == 0) {
+                $sql .= 'ENGINE=' . $this->default_engine . ' ';
+                $sql .= 'DEFAULT CHARACTER SET ' . ee()->db->escape_str(ee()->db->char_set) . ' COLLATE ' . ee()->db->escape_str(ee()->db->dbcollat);
+            }
 
-			if (ee()->db->query($sql) === FALSE)
-			{
-				foreach($this->DB->list_tables(TRUE) as $kill)
-				{
-					ee()->db->query('DROP TABLE IF EXISTS '.$kill);
-				}
+            if (ee()->db->query($sql) === FALSE) {
+                foreach ($this->DB->list_tables(TRUE) as $kill) {
+                    ee()->db->query('DROP TABLE IF EXISTS ' . $kill);
+                }
 
-				return FALSE;
-			}
-		}
+                return FALSE;
+            }
+        }
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 }
 
 // EOF

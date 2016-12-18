@@ -2,4 +2,6 @@
 
 namespace EllisLab\ExpressionEngine\Service\ChannelSet;
 
-class ImportException extends \Exception {}
+class ImportException extends \Exception
+{
+}

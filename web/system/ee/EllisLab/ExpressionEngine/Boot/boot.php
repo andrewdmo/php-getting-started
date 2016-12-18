@@ -1,14 +1,14 @@
-<?php  if ( ! defined('SYSPATH')) exit('No direct script access allowed');
+<?php if (!defined('SYSPATH')) exit('No direct script access allowed');
 
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 3.0.0
+ * @package        ExpressionEngine
+ * @author        EllisLab Dev Team
+ * @copyright    Copyright (c) 2003 - 2016, EllisLab, Inc.
+ * @license        https://expressionengine.com/license
+ * @link        https://ellislab.com
+ * @since        Version 3.0.0
  * @filesource
  */
 
@@ -20,91 +20,84 @@
  *             files check for this (`if ! defined ...`)
  * ------------------------------------------------------
  */
-	define('BASEPATH', SYSPATH.'ee/legacy/');
+define('BASEPATH', SYSPATH . 'ee/legacy/');
 
-	// load user configurable constants
-	$constants = require SYSPATH.'ee/EllisLab/ExpressionEngine/Config/constants.php';
+// load user configurable constants
+$constants = require SYSPATH . 'ee/EllisLab/ExpressionEngine/Config/constants.php';
 
-	if (file_exists(SYSPATH.'user/config/constants.php'))
-	{
-		$user_constants = include SYSPATH.'user/config/constants.php';
-		$constants = array_merge($constants, $user_constants);
-	}
+if (file_exists(SYSPATH . 'user/config/constants.php')) {
+    $user_constants = include SYSPATH . 'user/config/constants.php';
+    $constants = array_merge($constants, $user_constants);
+}
 
-	foreach ($constants as $k => $v)
-	{
-		define($k, $v);
-	}
+foreach ($constants as $k => $v) {
+    define($k, $v);
+}
 
 /*
  * ------------------------------------------------------
  *  Load the autoloader and register it
  * ------------------------------------------------------
  */
-	require SYSPATH.'ee/EllisLab/ExpressionEngine/Core/Autoloader.php';
+require SYSPATH . 'ee/EllisLab/ExpressionEngine/Core/Autoloader.php';
 
-	EllisLab\ExpressionEngine\Core\Autoloader::getInstance()
-		->addPrefix('EllisLab', SYSPATH.'ee/EllisLab/')
-		->addPrefix('Michelf', SYSPATH.'ee/legacy/libraries/typography/Markdown/Michelf/')
-		->addPrefix('Mexitek', SYSPATH.'ee/Mexitek/')
-		->register();
+EllisLab\ExpressionEngine\Core\Autoloader::getInstance()
+    ->addPrefix('EllisLab', SYSPATH . 'ee/EllisLab/')
+    ->addPrefix('Michelf', SYSPATH . 'ee/legacy/libraries/typography/Markdown/Michelf/')
+    ->addPrefix('Mexitek', SYSPATH . 'ee/Mexitek/')
+    ->register();
 
 /*
  * ------------------------------------------------------
  *  Load the global functions
  * ------------------------------------------------------
  */
-	require __DIR__ . '/boot.common.php';
+require __DIR__ . '/boot.common.php';
 
 /*
  * ------------------------------------------------------
  *  Define a custom error handler so we can log PHP errors
  * ------------------------------------------------------
  */
-	set_error_handler('_exception_handler');
+set_error_handler('_exception_handler');
 
 /*
  * ------------------------------------------------------
  *  Check for the installer if we're booting the CP
  * ------------------------------------------------------
  */
-	use EllisLab\ExpressionEngine\Core;
+use EllisLab\ExpressionEngine\Core;
 
-	if (defined('REQ') && REQ == 'CP' && is_dir(SYSPATH.'ee/installer/'))
-	{
-		$core = new Core\Installer();
-	}
-	else
-	{
-		$core = new Core\ExpressionEngine();
-	}
+if (defined('REQ') && REQ == 'CP' && is_dir(SYSPATH . 'ee/installer/')) {
+    $core = new Core\Installer();
+} else {
+    $core = new Core\ExpressionEngine();
+}
 
 /*
  * ------------------------------------------------------
  *  Boot the core
  * ------------------------------------------------------
  */
-	$core->boot();
+$core->boot();
 
 /*
  * ------------------------------------------------------
- *  Set config items from the index.php file
+ *  Set config items from the oldindex.php file
  * ------------------------------------------------------
  */
-	if (isset($assign_to_config))
-	{
-		$core->overrideConfig($assign_to_config);
-	}
+if (isset($assign_to_config)) {
+    $core->overrideConfig($assign_to_config);
+}
 
 /*
  * ------------------------------------------------------
- *  Set routing overrides from the index.php file
+ *  Set routing overrides from the oldindex.php file
  * ------------------------------------------------------
  */
-	if (isset($routing))
-	{
-		$core->overrideRouting($routing);
-	}
+if (isset($routing)) {
+    $core->overrideRouting($routing);
+}
 
 /*
  * ------------------------------------------------------
@@ -114,47 +107,46 @@
  *  is relying on that instead of get_instance()
  * ------------------------------------------------------
  */
-	$CI = $core->getLegacyApp()->getFacade();
+$CI = $core->getLegacyApp()->getFacade();
 
-	function get_instance()
-	{
-		global $CI;
-		return $CI;
-	}
+function get_instance()
+{
+    global $CI;
+    return $CI;
+}
 
-	function ee($dep = NULL)
-	{
-		$facade = get_instance();
+function ee($dep = NULL)
+{
+    $facade = get_instance();
 
-		if (isset($dep) && isset($facade->di))
-		{
-			$args = func_get_args();
-			return call_user_func_array(array($facade->di, 'make'), $args);
-			return $facade->di->make($dep);
-		}
+    if (isset($dep) && isset($facade->di)) {
+        $args = func_get_args();
+        return call_user_func_array(array($facade->di, 'make'), $args);
+        return $facade->di->make($dep);
+    }
 
-		return $facade;
-	}
+    return $facade;
+}
 
 /*
  * ------------------------------------------------------
  *  Parse the request
  * ------------------------------------------------------
  */
-	$request = Core\Request::fromGlobals();
+$request = Core\Request::fromGlobals();
 
 /*
  * ------------------------------------------------------
  *  Run the request and get a response
  * ------------------------------------------------------
  */
-	$response = $core->run($request);
+$response = $core->run($request);
 
 /*
  * ------------------------------------------------------
  *  Send the response
  * ------------------------------------------------------
  */
-	$response->send();
+$response->send();
 
 // EOF

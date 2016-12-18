@@ -2,26 +2,27 @@
 
 namespace EllisLab\ExpressionEngine\Library\Mixin;
 
-interface Mixable {
+interface Mixable
+{
 
-	/**
-	 * Has a given mixin?
-	 */
-	public function hasMixin($name);
+    /**
+     * Has a given mixin?
+     */
+    public function hasMixin($name);
 
-	/**
-	 * Get a given mixin
-	 */
-	public function getMixin($name);
+    /**
+     * Get a given mixin
+     */
+    public function getMixin($name);
 
-	/**
-	 * Get the current mixin manager
-	 */
-	public function getMixinManager();
+    /**
+     * Get the current mixin manager
+     */
+    public function getMixinManager();
 
-	/**
-	 * Set a mixin manager
-	 */
-	public function setMixinManager($manager);
+    /**
+     * Set a mixin manager
+     */
+    public function setMixinManager($manager);
 
 }

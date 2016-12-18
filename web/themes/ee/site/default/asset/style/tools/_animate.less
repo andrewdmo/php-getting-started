@@ -19,22 +19,31 @@
 	examples
 		.breathe(.10s);
 */
-@-webkit-keyframes breathing{
-	from{ opacity: 1.0; }
-	to{ opacity: 0.5; }
-}
-@keyframes breathing{
-	from{ opacity: 1.0; }
-	to{ opacity: 0.5; }
+@-webkit-keyframes breathing {
+  from {
+    opacity: 1.0;
+  }
+  to {
+    opacity: 0.5;
+  }
 }
 
-.breathe(@speed: .8s){
-	-webkit-animation: breathing @speed ease-in-out 0 infinite alternate;
-	animation-name: breathing;
-	animation-duration: @speed;
-	animation-iteration-count: infinite;
-	animation-direction: alternate;
-	animation-timing-function: ease-in-out;
+@keyframes breathing {
+  from {
+    opacity: 1.0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+.breathe(@speed: .8s) {
+  -webkit-animation: breathing @speed ease-in-out 0 infinite alternate;
+  animation-name: breathing;
+  animation-duration: @speed;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
 }
 
 /*
@@ -46,22 +55,31 @@
 	examples
 		.blink(.5s, 15;);
 */
-@-webkit-keyframes blinking{
-	from{ opacity: 1.0; }
-	to{ opacity: 0.3; }
-}
-@keyframes blinking{
-	from{ opacity: 1.0; }
-	to{ opacity: 0.3; }
+@-webkit-keyframes blinking {
+  from {
+    opacity: 1.0;
+  }
+  to {
+    opacity: 0.3;
+  }
 }
 
-.blink(@speed: .2s, @count: 15){
-	-webkit-animation: blinking @speed ease-in-out 0 @count alternate;
-	animation-name: blinking;
-	animation-duration: @speed;
-	animation-iteration-count: @count;
-	animation-direction: alternate;
-	animation-timing-function: ease-in-out;
+@keyframes blinking {
+  from {
+    opacity: 1.0;
+  }
+  to {
+    opacity: 0.3;
+  }
+}
+
+.blink(@speed: .2s, @count: 15) {
+  -webkit-animation: blinking @speed ease-in-out 0 @count alternate;
+  animation-name: blinking;
+  animation-duration: @speed;
+  animation-iteration-count: @count;
+  animation-direction: alternate;
+  animation-timing-function: ease-in-out;
 }
 
 /*
@@ -72,21 +90,30 @@
 	examples
 		.spin(.10s);
 */
-@-webkit-keyframes spinner{
-	from{ .tf(rotate(0deg)); }
-	to{ .tf(rotate(359deg)); }
-}
-@keyframes spinner{
-	from{ .tf(rotate(0deg)); }
-	to{ .tf(rotate(359deg)); }
+@-webkit-keyframes spinner {
+  from {
+    .tf(rotate(0deg));
+  }
+  to {
+    .tf(rotate(359deg));
+  }
 }
 
-.spin(@speed: .8s){
-	-webkit-animation: spinner @speed linear 0 infinite;
-	animation-name: spinner;
-	animation-duration: @speed;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
+@keyframes spinner {
+  from {
+    .tf(rotate(0deg));
+  }
+  to {
+    .tf(rotate(359deg));
+  }
+}
+
+.spin(@speed: .8s) {
+  -webkit-animation: spinner @speed linear 0 infinite;
+  animation-name: spinner;
+  animation-duration: @speed;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 /*
@@ -97,19 +124,28 @@
 	examples
 		.progress(.10s);
 */
-@-webkit-keyframes progressed{
-	from{ background-position: 0 0; }
-	to{ background-position: @progress-bg-pos 0; }
-}
-@keyframes progressed{
-	from{ background-position: 0 0; }
-	to{ background-position: @progress-bg-pos 0; }
+@-webkit-keyframes progressed {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: @progress-bg-pos 0;
+  }
 }
 
-.progress(@speed: .9s){
-	-webkit-animation: progressed @speed linear 0 infinite;
-	animation-name: progressed;
-	animation-duration: @speed;
-	animation-iteration-count: infinite;
-	animation-timing-function: linear;
+@keyframes progressed {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: @progress-bg-pos 0;
+  }
+}
+
+.progress(@speed: .9s) {
+  -webkit-animation: progressed @speed linear 0 infinite;
+  animation-name: progressed;
+  animation-duration: @speed;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }

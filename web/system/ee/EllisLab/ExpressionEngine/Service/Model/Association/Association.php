@@ -6,7 +6,8 @@ use EllisLab\ExpressionEngine\Service\Model\Collection;
 use EllisLab\ExpressionEngine\Service\Model\Model;
 use EllisLab\ExpressionEngine\Service\Model\Relation\Relation;
 
-class Association {
+class Association
+{
 
     private $loaded = FALSE;
     private $inverse_name;
@@ -29,12 +30,10 @@ class Association {
     {
         $this->related = $related;
 
-        if ( ! $_skip_inverse)
-        {
+        if (!$_skip_inverse) {
             $related = $this->toModelArray($related);
 
-            foreach ($related as $to)
-            {
+            foreach ($related as $to) {
                 $this->relation->fillLinkIds($this->model, $to);
                 $this->getInverse($to)->fill($this->model, TRUE);
             }
@@ -50,12 +49,10 @@ class Association {
         $this->remove();
         $items = $this->toModelArray($item);
 
-        foreach ($items as $model)
-        {
+        foreach ($items as $model) {
             $inverse = $this->getInverse($model);
 
-            if ($inverse instanceOf ToOne)
-            {
+            if ($inverse instanceOf ToOne) {
                 $inverse->remove();
             }
 
@@ -67,8 +64,7 @@ class Association {
 
     public function getInverseName()
     {
-        if ( ! isset($this->inverse_name))
-        {
+        if (!isset($this->inverse_name)) {
             $inverse = $this->relation->getInverse();
             $this->inverse_name = $inverse->getName();
         }
@@ -84,8 +80,7 @@ class Association {
 
     public function get()
     {
-        if ( ! isset($this->related) && ! $this->isLoaded())
-        {
+        if (!isset($this->related) && !$this->isLoaded()) {
             $this->reload();
         }
 
@@ -96,8 +91,7 @@ class Association {
     {
         $items = $this->toModelArray($item);
 
-        foreach ($items as $model)
-        {
+        foreach ($items as $model) {
             $this->addToRelated($model);
         }
     }
@@ -107,8 +101,7 @@ class Association {
         $items = $items ?: $this->related;
         $items = $this->toModelArray($items);
 
-        foreach ($items as $model)
-        {
+        foreach ($items as $model) {
             $this->removeFromRelated($model);
         }
     }
@@ -118,8 +111,7 @@ class Association {
         $new_id = $this->model->getId();
         $items = $this->toModelArray($this->related);
 
-        foreach ($items as $to)
-        {
+        foreach ($items as $to) {
             $this->relation->linkIds($this->model, $to);
         }
     }
@@ -133,12 +125,10 @@ class Association {
     {
         $this->diff->commit();
 
-        if ( ! $this->saving && $this->relation->canSaveAcross())
-        {
+        if (!$this->saving && $this->relation->canSaveAcross()) {
             $this->saving = TRUE;
 
-            if (isset($this->related))
-            {
+            if (isset($this->related)) {
                 $this->related->save();
             }
 
@@ -156,26 +146,25 @@ class Association {
         return $this->loaded;
     }
 
-	/**
-	 *
-	 */
-	public function reload()
-	{
-		$query = $this->facade->get($this->relation->getTargetModel());
-		$query->setLazyConstraint($this->relation, $this->model);
+    /**
+     *
+     */
+    public function reload()
+    {
+        $query = $this->facade->get($this->relation->getTargetModel());
+        $query->setLazyConstraint($this->relation, $this->model);
 
-		$result = $query->all();
+        $result = $query->all();
 
-        if ($result instanceOf Collection)
-        {
+        if ($result instanceOf Collection) {
             $result->setAssociation($this);
         }
 
-		$this->fill($result);
+        $this->fill($result);
 
         $this->diff->reset();
-		$this->markAsLoaded();
-	}
+        $this->markAsLoaded();
+    }
 
     public function setFacade($facade)
     {
@@ -220,23 +209,19 @@ class Association {
 
     protected function toModelArray($item)
     {
-        if (is_null($item))
-        {
+        if (is_null($item)) {
             return array();
         }
 
-        if (is_array($item))
-        {
+        if (is_array($item)) {
             return $item;
         }
 
-        if ($item instanceOf Model)
-        {
+        if ($item instanceOf Model) {
             return array($item);
         }
 
-        if ($item instanceOf Collection)
-        {
+        if ($item instanceOf Collection) {
             return $item->asArray();
         }
 
@@ -251,8 +236,7 @@ class Association {
         $this->diff = new Diff($this->model, $this->relation);
 
         $that = $this;
-        $this->model->on('setId', function() use ($that)
-        {
+        $this->model->on('setId', function () use ($that) {
             $that->idHasChanged();
         });
     }

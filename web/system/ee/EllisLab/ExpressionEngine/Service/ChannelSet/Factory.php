@@ -2,9 +2,8 @@
 
 namespace EllisLab\ExpressionEngine\Service\ChannelSet;
 
-use EllisLab\ExpressionEngine\Service\File\Directory;
-
-class Factory {
+class Factory
+{
 
     /**
      * @var Int Site id used for import
@@ -47,7 +46,7 @@ class Factory {
         $set = $extractor->extractAs($name);
         $set->setSiteId($this->site_id);
 
-		return $set;
+        return $set;
     }
 
     /**
@@ -58,7 +57,7 @@ class Factory {
      */
     public function importDir($dir)
     {
-		$set = new Set($dir);
+        $set = new Set($dir);
         $set->setSiteId($this->site_id);
 
         return $set;

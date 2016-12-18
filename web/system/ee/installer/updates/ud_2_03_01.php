@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * ExpressionEngine - by EllisLab
@@ -23,19 +23,20 @@
  * @author      EllisLab Dev Team
  * @link        https://ellislab.com
  */
-class Updater {
+class Updater
+{
 
-	var $version_suffix = '';
+    var $version_suffix = '';
 
-	/**
-	 * Do Update
-	 *
-	 * @return TRUE
-	 */
-	public function do_update()
+    /**
+     * Do Update
+     *
+     * @return TRUE
+     */
+    public function do_update()
     {
-		// rien ne va plus
-		return TRUE;
+        // rien ne va plus
+        return TRUE;
     }
 }
 /* END CLASS */

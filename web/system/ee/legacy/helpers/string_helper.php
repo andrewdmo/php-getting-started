@@ -1,14 +1,14 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.0
+ * @package        ExpressionEngine
+ * @author        EllisLab Dev Team
+ * @copyright    Copyright (c) 2003 - 2016, EllisLab, Inc.
+ * @license        https://expressionengine.com/license
+ * @link        https://ellislab.com
+ * @since        Version 2.0
  * @filesource
  */
 
@@ -17,11 +17,11 @@
 /**
  * ExpressionEngine String Helper
  *
- * @package		ExpressionEngine
- * @subpackage	Helpers
- * @category	Helpers
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * @package        ExpressionEngine
+ * @subpackage    Helpers
+ * @category    Helpers
+ * @author        EllisLab Dev Team
+ * @link        https://ellislab.com
  */
 
 // ------------------------------------------------------------------------
@@ -37,16 +37,15 @@
  *
  * this/that/theother
  *
- * @access	public
- * @param	string
- * @return	string
+ * @access    public
+ * @param    string
+ * @return    string
  */
-if ( ! function_exists('trim_slashes'))
-{
-	function trim_slashes($str)
-	{
-		return trim($str, '/');
-	}
+if (!function_exists('trim_slashes')) {
+    function trim_slashes($str)
+    {
+        return trim($str, '/');
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -56,28 +55,23 @@ if ( ! function_exists('trim_slashes'))
  *
  * Removes slashes contained in a string or in an array
  *
- * @access	public
- * @param	mixed	string or array
- * @return	mixed	string or array
+ * @access    public
+ * @param    mixed    string or array
+ * @return    mixed    string or array
  */
-if ( ! function_exists('strip_slashes'))
-{
-	function strip_slashes($str)
-	{
-		if (is_array($str))
-		{
-			foreach ($str as $key => $val)
-			{
-				$str[$key] = strip_slashes($val);
-			}
-		}
-		else
-		{
-			$str = stripslashes($str);
-		}
+if (!function_exists('strip_slashes')) {
+    function strip_slashes($str)
+    {
+        if (is_array($str)) {
+            foreach ($str as $key => $val) {
+                $str[$key] = strip_slashes($val);
+            }
+        } else {
+            $str = stripslashes($str);
+        }
 
-		return $str;
-	}
+        return $str;
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -87,16 +81,15 @@ if ( ! function_exists('strip_slashes'))
  *
  * Removes single and double quotes from a string
  *
- * @access	public
- * @param	string
- * @return	string
+ * @access    public
+ * @param    string
+ * @return    string
  */
-if ( ! function_exists('strip_quotes'))
-{
-	function strip_quotes($str)
-	{
-		return str_replace(array('"', "'"), '', $str);
-	}
+if (!function_exists('strip_quotes')) {
+    function strip_quotes($str)
+    {
+        return str_replace(array('"', "'"), '', $str);
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -106,16 +99,15 @@ if ( ! function_exists('strip_quotes'))
  *
  * Converts single and double quotes to entities
  *
- * @access	public
- * @param	string
- * @return	string
+ * @access    public
+ * @param    string
+ * @return    string
  */
-if ( ! function_exists('quotes_to_entities'))
-{
-	function quotes_to_entities($str)
-	{
-		return str_replace(array("\'","\"","'",'"'), array("&#39;","&quot;","&#39;","&quot;"), $str);
-	}
+if (!function_exists('quotes_to_entities')) {
+    function quotes_to_entities($str)
+    {
+        return str_replace(array("\'", "\"", "'", '"'), array("&#39;", "&quot;", "&#39;", "&quot;"), $str);
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -132,16 +124,15 @@ if ( ! function_exists('quotes_to_entities'))
  *
  * http://www.some-site.com/index.php
  *
- * @access	public
- * @param	string
- * @return	string
+ * @access    public
+ * @param    string
+ * @return    string
  */
-if ( ! function_exists('reduce_double_slashes'))
-{
-	function reduce_double_slashes($str)
-	{
-		return preg_replace("#([^/:])/+#", "\\1/", $str);
-	}
+if (!function_exists('reduce_double_slashes')) {
+    function reduce_double_slashes($str)
+    {
+        return preg_replace("#([^/:])/+#", "\\1/", $str);
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -157,25 +148,23 @@ if ( ! function_exists('reduce_double_slashes'))
  *
  * Fred, Bill, Joe, Jimmy
  *
- * @access	public
- * @param	string
- * @param	string	the character you wish to reduce
- * @param	bool	TRUE/FALSE - whether to trim the character from the beginning/end
- * @return	string
+ * @access    public
+ * @param    string
+ * @param    string    the character you wish to reduce
+ * @param    bool    TRUE/FALSE - whether to trim the character from the beginning/end
+ * @return    string
  */
-if ( ! function_exists('reduce_multiples'))
-{
-	function reduce_multiples($str, $character = ',', $trim = FALSE)
-	{
-		$str = preg_replace('#'.preg_quote($character, '#').'{2,}#', $character, $str);
+if (!function_exists('reduce_multiples')) {
+    function reduce_multiples($str, $character = ',', $trim = FALSE)
+    {
+        $str = preg_replace('#' . preg_quote($character, '#') . '{2,}#', $character, $str);
 
-		if ($trim === TRUE)
-		{
-			$str = trim($str, $character);
-		}
+        if ($trim === TRUE) {
+            $str = trim($str, $character);
+        }
 
-		return $str;
-	}
+        return $str;
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -185,57 +174,58 @@ if ( ! function_exists('reduce_multiples'))
  *
  * Useful for generating passwords or hashes.
  *
- * @access	public
- * @param	string	type of random string.  basic, alpha, alunum, numeric, nozero, unique, md5, encrypt and sha1
- * @param	integer	number of characters
- * @return	string
+ * @access    public
+ * @param    string    type of random string.  basic, alpha, alunum, numeric, nozero, unique, md5, encrypt and sha1
+ * @param    integer    number of characters
+ * @return    string
  */
-if ( ! function_exists('random_string'))
-{
-	function random_string($type = 'alnum', $len = 8, $antipool = '')
-	{
-		switch($type)
-		{
-			case 'basic'	: return mt_rand();
-				break;
-			case 'alnum'	:
-			case 'numeric'	:
-			case 'nozero'	:
-			case 'alpha'	:
+if (!function_exists('random_string')) {
+    function random_string($type = 'alnum', $len = 8, $antipool = '')
+    {
+        switch ($type) {
+            case 'basic'    :
+                return mt_rand();
+                break;
+            case 'alnum'    :
+            case 'numeric'    :
+            case 'nozero'    :
+            case 'alpha'    :
 
-					switch ($type)
-					{
-						case 'alpha'	:	$pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-							break;
-						case 'alnum'	:	$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-							break;
-						case 'numeric'	:	$pool = '0123456789';
-							break;
-						case 'nozero'	:	$pool = '123456789';
-							break;
-					}
+                switch ($type) {
+                    case 'alpha'    :
+                        $pool = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                        break;
+                    case 'alnum'    :
+                        $pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                        break;
+                    case 'numeric'    :
+                        $pool = '0123456789';
+                        break;
+                    case 'nozero'    :
+                        $pool = '123456789';
+                        break;
+                }
 
-					$pool = str_replace(str_split($antipool), '', $pool);
+                $pool = str_replace(str_split($antipool), '', $pool);
 
-					$str = '';
-					for ($i=0; $i < $len; $i++)
-					{
-						$str .= substr($pool, mt_rand(0, strlen($pool) -1), 1);
-					}
-					return $str;
-				break;
-			case 'unique'	:
-			case 'md5'		:
+                $str = '';
+                for ($i = 0; $i < $len; $i++) {
+                    $str .= substr($pool, mt_rand(0, strlen($pool) - 1), 1);
+                }
+                return $str;
+                break;
+            case 'unique'    :
+            case 'md5'        :
 
-						return md5(uniqid(mt_rand()));
-				break;
-			case 'encrypt'	:
-			case 'sha1'	:
+                return md5(uniqid(mt_rand()));
+                break;
+            case 'encrypt'    :
+            case 'sha1'    :
 
-						return sha1(uniqid(mt_rand(), TRUE));
-				break;
-		}
-	}
+                return sha1(uniqid(mt_rand(), TRUE));
+                break;
+        }
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -245,24 +235,22 @@ if ( ! function_exists('random_string'))
  *
  * Allows strings to be alternated.  See docs...
  *
- * @access	public
- * @param	string (as many parameters as needed)
- * @return	string
+ * @access    public
+ * @param    string (as many parameters as needed)
+ * @return    string
  */
-if ( ! function_exists('alternator'))
-{
-	function alternator()
-	{
-		static $i;
+if (!function_exists('alternator')) {
+    function alternator()
+    {
+        static $i;
 
-		if (func_num_args() == 0)
-		{
-			$i = 0;
-			return '';
-		}
-		$args = func_get_args();
-		return $args[($i++ % count($args))];
-	}
+        if (func_num_args() == 0) {
+            $i = 0;
+            return '';
+        }
+        $args = func_get_args();
+        return $args[($i++ % count($args))];
+    }
 }
 
 // ------------------------------------------------------------------------
@@ -270,42 +258,40 @@ if ( ! function_exists('alternator'))
 /**
  * Repeater function
  *
- * @access	public
- * @param	string
- * @param	integer	number of repeats
- * @return	string
+ * @access    public
+ * @param    string
+ * @param    integer    number of repeats
+ * @return    string
  */
-if ( ! function_exists('repeater'))
-{
-	function repeater($data, $num = 1)
-	{
-		return (($num > 0) ? str_repeat($data, $num) : '');
-	}
+if (!function_exists('repeater')) {
+    function repeater($data, $num = 1)
+    {
+        return (($num > 0) ? str_repeat($data, $num) : '');
+    }
 }
 
 // ------------------------------------------------------------------------
 
- /**
+/**
  * Unique Marker
  *
  * The template library and some of our modules temporarily replace
  * pieces of code with a random string. These need to be unique per
  * request to avoid potential security issues.
  *
- * @access	public
- * @param	string	marker identifier
- * @return	string
+ * @access    public
+ * @param    string    marker identifier
+ * @return    string
  */
 function unique_marker($ident)
 {
-	static $rand;
+    static $rand;
 
-	if ( ! $rand)
-	{
-		$rand = random_string('alnum', 32);
-	}
+    if (!$rand) {
+        $rand = random_string('alnum', 32);
+    }
 
-	return $rand.$ident;
+    return $rand . $ident;
 }
 
 // ----------------------------------------------------------------------------
@@ -318,7 +304,7 @@ function unique_marker($ident)
  */
 function trim_nbs($string)
 {
-	return trim($string, " \t\n\r\0\xB\xA0".chr(0xC2).chr(0xA0));
+    return trim($string, " \t\n\r\0\xB\xA0" . chr(0xC2) . chr(0xA0));
 }
 
 // ----------------------------------------------------------------------------
@@ -327,27 +313,24 @@ function trim_nbs($string)
 /**
  * Validates format of submitted license number, for soft validation
  *
- * @param string	$license	the string to run the pattern check on
- * @return bool		TRUE on pattern math, FALSE on failure
+ * @param string $license the string to run the pattern check on
+ * @return bool        TRUE on pattern math, FALSE on failure
  **/
 function valid_license_pattern($license)
 {
-	if (IS_CORE && $license == 'CORE LICENSE')
-	{
-		return TRUE;
-	}
+    if (IS_CORE && $license == 'CORE LICENSE') {
+        return TRUE;
+    }
 
-	if (count(count_chars(str_replace('-', '', $license), 1)) == 1 OR $license == '1234-1234-1234-1234')
-	{
-		return FALSE;
-	}
+    if (count(count_chars(str_replace('-', '', $license), 1)) == 1 OR $license == '1234-1234-1234-1234') {
+        return FALSE;
+    }
 
-	if ( ! preg_match('/^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/', $license))
-	{
-		return FALSE;
-	}
+    if (!preg_match('/^[\d]{4}-[\d]{4}-[\d]{4}-[\d]{4}$/', $license)) {
+        return FALSE;
+    }
 
-	return TRUE;
+    return TRUE;
 }
 
 // ----------------------------------------------------------------------------
@@ -355,14 +338,14 @@ function valid_license_pattern($license)
 /**
  * Returns the surrounding character of a string, if it exists
  *
- * @param	string	$string		The string to check
- * @return	mixed	The surrounding character, or FALSE if there isn't one
+ * @param    string $string The string to check
+ * @return    mixed    The surrounding character, or FALSE if there isn't one
  */
 function surrounding_character($string)
 {
-	$first_char = substr($string, 0, 1);
+    $first_char = substr($string, 0, 1);
 
-	return ($first_char == substr($string, -1, 1)) ? $first_char : FALSE;
+    return ($first_char == substr($string, -1, 1)) ? $first_char : FALSE;
 }
 
 // EOF

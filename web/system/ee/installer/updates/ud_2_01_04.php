@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * ExpressionEngine - by EllisLab
@@ -23,23 +23,24 @@
  * @author      EllisLab Dev Team
  * @link        https://ellislab.com
  */
-class Updater {
+class Updater
+{
 
-	var $version_suffix = '';
+    var $version_suffix = '';
 
-	function do_update()
-	{
+    function do_update()
+    {
 
-		ee()->smartforge->drop_key('channel_data', 'weblog_id');
+        ee()->smartforge->drop_key('channel_data', 'weblog_id');
 
-		ee()->smartforge->add_key('channel_data', 'channel_id');
+        ee()->smartforge->add_key('channel_data', 'channel_id');
 
-		ee()->smartforge->drop_key('channel_titles', 'weblog_id');
+        ee()->smartforge->drop_key('channel_titles', 'weblog_id');
 
-		ee()->smartforge->add_key('channel_titles', 'channel_id');
+        ee()->smartforge->add_key('channel_titles', 'channel_id');
 
-		return TRUE;
-	}
+        return TRUE;
+    }
 }
 /* END CLASS */
 

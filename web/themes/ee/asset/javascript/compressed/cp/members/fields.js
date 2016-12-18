@@ -9,4 +9,8 @@
  * @since		Version 3.1.0
  * @filesource
  */
-$(document).ready(function(){$("fieldset :input:hidden").attr("disabled",!0),$('select[name="m_field_type"]').on("change",function(){$("fieldset :input:hidden").attr("disabled",!0),$("fieldset input[type=hidden], fieldset :input:visible").attr("disabled",!1)})});
+$(document).ready(function () {
+    $("fieldset :input:hidden").attr("disabled", !0), $('select[name="m_field_type"]').on("change", function () {
+        $("fieldset :input:hidden").attr("disabled", !0), $("fieldset input[type=hidden], fieldset :input:visible").attr("disabled", !1)
+    })
+});

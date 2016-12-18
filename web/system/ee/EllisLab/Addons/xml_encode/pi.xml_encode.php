@@ -1,43 +1,42 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
  * Xml_encode Class
  *
- * @package			ExpressionEngine
- * @category		Plugin
- * @author			EllisLab Dev Team
- * @copyright		Copyright (c) 2004 - 2016, EllisLab, Inc.
- * @link			https://ellislab.com
+ * @package            ExpressionEngine
+ * @category        Plugin
+ * @author            EllisLab Dev Team
+ * @copyright        Copyright (c) 2004 - 2016, EllisLab, Inc.
+ * @link            https://ellislab.com
  */
+class Xml_encode
+{
 
+    var $return_data;
 
-class Xml_encode {
+    /**
+     * Constructor
+     *
+     */
+    public function __construct($str = '')
+    {
+        $protect_all = (ee()->TMPL->fetch_param('protect_entities') === 'yes') ? TRUE : FALSE;
 
-	var $return_data;
+        $str = ($str == '') ? ee()->TMPL->tagdata : $str;
 
-	/**
-	 * Constructor
-	 *
-	 */
-	public function __construct($str = '')
-	{
-		$protect_all = (ee()->TMPL->fetch_param('protect_entities') === 'yes') ? TRUE : FALSE;
+        // Load the XML Helper
+        ee()->load->helper('xml');
 
-		$str = ($str == '') ? ee()->TMPL->tagdata : $str;
+        $str = xml_convert(strip_tags($str), $protect_all);
 
-		// Load the XML Helper
-		ee()->load->helper('xml');
+        // Strip [email] tags
+        $str = preg_replace("/\[email=(.*?)\](.*?)\[\/email\]/i", '\\2', $str);
+        $str = preg_replace("/\[email\](.*?)\[\/email\]/i", '\\1', $str);
 
-		$str = xml_convert(strip_tags($str), $protect_all);
+        $this->return_data = trim(str_replace('&nbsp;', '&#160;', $str));
+    }
 
-		// Strip [email] tags
-		$str = preg_replace("/\[email=(.*?)\](.*?)\[\/email\]/i", '\\2', $str);
-		$str = preg_replace("/\[email\](.*?)\[\/email\]/i", '\\1', $str);
-
-		$this->return_data = trim(str_replace('&nbsp;', '&#160;', $str));
-	}
-
-	// --------------------------------------------------------------------
+    // --------------------------------------------------------------------
 
 }
 // END CLASS

@@ -5,12 +5,12 @@ namespace EllisLab\ExpressionEngine\Library\Parser;
 /**
  * ExpressionEngine - by EllisLab
  *
- * @package		ExpressionEngine
- * @author		EllisLab Dev Team
- * @copyright	Copyright (c) 2003 - 2016, EllisLab, Inc.
- * @license		https://expressionengine.com/license
- * @link		https://ellislab.com
- * @since		Version 2.9.0
+ * @package        ExpressionEngine
+ * @author        EllisLab Dev Team
+ * @copyright    Copyright (c) 2003 - 2016, EllisLab, Inc.
+ * @license        https://expressionengine.com/license
+ * @link        https://ellislab.com
+ * @since        Version 2.9.0
  * @filesource
  */
 
@@ -19,119 +19,117 @@ namespace EllisLab\ExpressionEngine\Library\Parser;
 /**
  * ExpressionEngine Core Abstract Parser Class
  *
- * @package		ExpressionEngine
- * @subpackage	Core
- * @category	Core
- * @author		EllisLab Dev Team
- * @link		https://ellislab.com
+ * @package        ExpressionEngine
+ * @subpackage    Core
+ * @category    Core
+ * @author        EllisLab Dev Team
+ * @link        https://ellislab.com
  *
  * THIRD PARTY DEVS: Extend at your own risk before it's documented
  */
-abstract class AbstractParser {
+abstract class AbstractParser
+{
 
-	/**
-	 * Current token
-	 */
-	protected $token;
+    /**
+     * Current token
+     */
+    protected $token;
 
-	/**
-	 * All tokens
-	 */
-	protected $tokens;
+    /**
+     * All tokens
+     */
+    protected $tokens;
 
-	/**
-	 * @param Array $tokens List of Token's
-	 */
-	public function __construct($tokens)
-	{
-		$this->tokens = $tokens;
-	}
+    /**
+     * @param Array $tokens List of Token's
+     */
+    public function __construct($tokens)
+    {
+        $this->tokens = $tokens;
+    }
 
-	/**
-	 * All parsers must implement a parse method
-	 *
-	 * @return String parsed string
-	 */
-	abstract public function parse();
+    /**
+     * All parsers must implement a parse method
+     *
+     * @return String parsed string
+     */
+    abstract public function parse();
 
-	/**
-	 * Compare the current token to a given type
-	 *
-	 * @param String $type The type to check against
-	 * @return bool  Current token is of type $type.
-	 */
-	protected function is($type)
-	{
-		if ($this->valid())
-		{
-			return ($this->token->type == $type);
-		}
+    /**
+     * Compare the current token to a given type
+     *
+     * @param String $type The type to check against
+     * @return bool  Current token is of type $type.
+     */
+    protected function is($type)
+    {
+        if ($this->valid()) {
+            return ($this->token->type == $type);
+        }
 
-		return FALSE;
-	}
+        return FALSE;
+    }
 
-	/**
-	 * Get the current token value
-	 *
-	 * @return mixed
-	 */
-	protected function value()
-	{
-		return $this->token->lexeme;
-	}
+    /**
+     * Get the current token value
+     *
+     * @return mixed
+     */
+    protected function value()
+    {
+        return $this->token->lexeme;
+    }
 
-	/**
-	 * Compare the current token to a type, and advance if it matches.
-	 *
-	 * @param String $type The type to check against
-	 * @return Bool  Token was accepted
-	 */
-	protected function accept($type)
-	{
-		if ($this->is($type))
-		{
-			$this->next();
-			return TRUE;
-		}
+    /**
+     * Compare the current token to a type, and advance if it matches.
+     *
+     * @param String $type The type to check against
+     * @return Bool  Token was accepted
+     */
+    protected function accept($type)
+    {
+        if ($this->is($type)) {
+            $this->next();
+            return TRUE;
+        }
 
-		return FALSE;
-	}
+        return FALSE;
+    }
 
-	/**
-	 * Enforce an expected token.
-	 *
-	 * @param String $type The name to check against
-	 * @return Bool  Expected token was found
-	 */
-	protected function expect($type)
-	{
-		if ($this->accept($type))
-		{
-			return TRUE;
-		}
+    /**
+     * Enforce an expected token.
+     *
+     * @param String $type The name to check against
+     * @return Bool  Expected token was found
+     */
+    protected function expect($type)
+    {
+        if ($this->accept($type)) {
+            return TRUE;
+        }
 
-		return FALSE;
-	}
+        return FALSE;
+    }
 
-	/**
-	 * Move to the next token.
-	 *
-	 * @return void
-	 */
-	protected function next()
-	{
-		$this->token = array_shift($this->tokens);
-	}
+    /**
+     * Move to the next token.
+     *
+     * @return void
+     */
+    protected function next()
+    {
+        $this->token = array_shift($this->tokens);
+    }
 
-	/**
-	 * Current token is valid.
-	 *
-	 * Used to stop the parser when we run out of tokens
-	 *
-	 * @return bool Token exists?
-	 */
-	protected function valid()
-	{
-		return ($this->token !== NULL);
-	}
+    /**
+     * Current token is valid.
+     *
+     * Used to stop the parser when we run out of tokens
+     *
+     * @return bool Token exists?
+     */
+    protected function valid()
+    {
+        return ($this->token !== NULL);
+    }
 }

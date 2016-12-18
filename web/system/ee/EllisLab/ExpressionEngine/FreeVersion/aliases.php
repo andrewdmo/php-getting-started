@@ -5,6 +5,6 @@
 // hinting, but the autoloader will receive the overriden class name. Magic.
 
 class_alias(
-	'EllisLab\ExpressionEngine\FreeVersion\Spam\Spam',
-	'EllisLab\Addons\Spam\Service\Spam'
+    'EllisLab\ExpressionEngine\FreeVersion\Spam\Spam',
+    'EllisLab\Addons\Spam\Service\Spam'
 );
